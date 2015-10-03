@@ -2,15 +2,15 @@ citHeader("To cite tagger in publications, please use:")
 
 
 citEntry(entry = "manual",
-    title = "{tagger}: A ...",
+    title = "{tagger}: Part of Speech Tagging",
     author = "Tyler W. Rinker",
     organization = "University at Buffalo/SUNY",
     address = "Buffalo, New York",
-    note = "version 0.1.2",
+    note = "version 0.0.2",
     year = "2015",
-    url = "http://github.com/trinker/tagger", 
+    url = "http://github.com/trinker/tagger",
     textVersion  = paste("Rinker, T. W. (2015).",
-        "tagger: ...",
-        "version 0.1.2. University at Buffalo. Buffalo, New York.",
+        "tagger: Part of Speech Tagging",
+        "version 0.0.2. University at Buffalo. Buffalo, New York.",
         "http://github.com/trinker/tagger")
 )
