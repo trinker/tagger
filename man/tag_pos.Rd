@@ -25,18 +25,18 @@ speech.  The \pkg{openNLP} annotator "computes Penn Treebank parse annotations
 using the Apache OpenNLP chunking parser for English."
 }
 \examples{
-(x <- tag_pos("I need $54 to go to the movies."))
+(x <- tag_pos("They refuse to permit us to obtain the refuse permit"))
 c(x) ## The true structure of a `tag_pos` object
 
 (out1 <- tag_pos(sam_i_am))
 as_word_tag(out1)
-count_pos(out1)
+count_tags(out1)
 plot(out1)
 \dontrun{
 (out2 <- tag_pos(presidential_debates_2012$dialogue)) # ~40 sec run time
-count_pos(out2)
-count_pos(out2, by = presidential_debates_2012$person)
-with(presidential_debates_2012, count_pos(out2, by = list(person, time)))
+count_tags(out2)
+count_tags(out2, by = presidential_debates_2012$person)
+with(presidential_debates_2012, count_tags(out2, by = list(person, time)))
 plot(out2)
 }
 }

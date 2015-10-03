@@ -34,18 +34,18 @@ presidential_debates_2012_pos \%>\%
 
 presidential_debates_2012_pos \%>\%
     select_tags(c("NN", "NNP", "NNPS", "NNS")) \%>\%
-    count_pos(presidential_debates_2012[, c("person", "time")])
+    count_tags(presidential_debates_2012[, c("person", "time")])
 
 presidential_debates_2012_pos \%>\%
     select_tags("NN", regex=TRUE) \%>\%
-    count_pos(presidential_debates_2012[, c("person", "time")])
+    count_tags(presidential_debates_2012[, c("person", "time")])
 
 presidential_debates_2012_pos \%>\%
     select_tags("NN(\\\\b|[^S])", regex=TRUE) \%>\%
-    count_pos(presidential_debates_2012[, c("person", "time")])
+    count_tags(presidential_debates_2012[, c("person", "time")])
 
 presidential_debates_2012_pos \%>\%
     select_tags(c("NN", "NNP", "NNPS", "NNS"), TRUE) \%>\%
-    count_pos(presidential_debates_2012[, c("person", "time")])
+    count_tags(presidential_debates_2012[, c("person", "time")])
 }
 

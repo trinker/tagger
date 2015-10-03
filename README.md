@@ -27,19 +27,15 @@ The main functions and descriptions are listed in the table below.
 <tbody>
 <tr class="odd">
 <td align="left"><code>tag_pos</code></td>
-<td align="left">Tag</td>
+<td align="left">Tag parts of speech</td>
 </tr>
 <tr class="even">
-<td align="left"><code>mark_word_stems</code></td>
-<td align="left">Highlight word stems</td>
+<td align="left"><code>select_tags</code></td>
+<td align="left">Select specific part of speech tags from <code>tag_pos</code></td>
 </tr>
 <tr class="odd">
-<td align="left"><code>mark_regex</code></td>
-<td align="left">Highlight by regex</td>
-</tr>
-<tr class="even">
-<td align="left"><code>mark_sentences</code></td>
-<td align="left">Highlight sentences by <code>grepl</code></td>
+<td align="left"><code>count_tags</code></td>
+<td align="left">Cross tabs of tags by grouping variable</td>
 </tr>
 </tbody>
 </table>
@@ -57,7 +53,8 @@ Table of Contents
     -   [Interpretting Tags](#interpretting-tags)
     -   [Counts](#counts)
     -   [Select Tags](#select-tags)
-    -   [As Tags](#as-tags)
+    -   [As Word Tags](#as-word-tags)
+    -   [As Tuples](#as-tuples)
 
 Installation
 ============
@@ -93,36 +90,12 @@ Load the Tools/Data
 -------------------
 
     library(dplyr)
-
-    ## 
-    ## Attaching package: 'dplyr'
-    ## 
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-    ## 
-    ## The following object is masked from 'package:qdap':
-    ## 
-    ##     %>%
-    ## 
-    ## The following object is masked from 'package:qdapTools':
-    ## 
-    ##     id
-    ## 
-    ## The following objects are masked from 'package:qdapRegex':
-    ## 
-    ##     escape, explain
-    ## 
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
     data(presidential_debates_2012)
     mwe <- data_frame(
         person = c("Tyler", "Norah", "Tyler"),
         talk = c(
             "I need $54 to go to the movies.",
-            "What time is it?",
+            "They refuse to permit us to obtain the refuse permit",
             "This is the tagger package; like it?"
         )
     )
@@ -134,8 +107,8 @@ Let's begin with a minimal example.
 
     tag_pos(mwe$talk)
 
-    ## [1] "I/PRP need/VBP $/$ 54/CD to/TO go/VB to/TO the/DT movies/NNS ./." 
-    ## [2] "What/WP time/NN is/VBZ it/PRP ?/."                                
+    ## [1] "I/PRP need/VBP $/$ 54/CD to/TO go/VB to/TO the/DT movies/NNS ./."                     
+    ## [2] "They/PRP refuse/VBP to/TO permit/VB us/PRP to/TO obtain/VB the/DT refuse/NN permit/NN"
     ## [3] "This/DT is/VBZ the/DT tagger/NN package/NN ;/: like/IN it/PRP ?/."
 
 Note that the out put pretty pints but the underlying structure is
@@ -153,8 +126,10 @@ object to see it's true structure.
     ## "movies"      "." 
     ## 
     ## [[2]]
-    ##     WP     NN    VBZ    PRP      . 
-    ## "What" "time"   "is"   "it"    "?" 
+    ##      PRP      VBP       TO       VB      PRP       TO       VB       DT 
+    ##   "They" "refuse"     "to" "permit"     "us"     "to" "obtain"    "the" 
+    ##       NN       NN 
+    ## "refuse" "permit" 
     ## 
     ## [[3]]
     ##        DT       VBZ        DT        NN        NN         :        IN 
@@ -261,25 +236,25 @@ The user can generate a count of the tags by grouping variable as well.
 The number of columns explodes quickly, even with this minimal example.
 
     tag_pos(mwe$talk) %>%
-        count_pos(mwe$person) 
+        count_tags(mwe$person) 
 
     ##   person n.tokens       $        .       :      CD       DT      IN
-    ## 1  Norah        5       0 1(20.0%)       0       0        0       0
+    ## 1  Norah       10       0        0       0       0 1(10.0%)       0
     ## 2  Tyler       19 1(5.3%) 2(10.5%) 1(5.3%) 1(5.3%) 3(15.8%) 1(5.3%)
-    ##         NN     NNS      PRP       TO      VB     VBP      VBZ       WP
-    ## 1 1(20.0%)       0 1(20.0%)        0       0       0 1(20.0%) 1(20.0%)
-    ## 2 2(10.5%) 1(5.3%) 2(10.5%) 2(10.5%) 1(5.3%) 1(5.3%)  1(5.3%)        0
+    ##         NN     NNS      PRP       TO       VB      VBP     VBZ
+    ## 1 2(20.0%)       0 2(20.0%) 2(20.0%) 2(20.0%) 1(10.0%)       0
+    ## 2 2(10.5%) 1(5.3%) 2(10.5%) 2(10.5%)  1(5.3%)  1(5.3%) 1(5.3%)
 
 The default is a pretty printing (counts + proportions) that can be
 turned off to print raw counts only.
 
     tag_pos(mwe$talk) %>%
-        count_pos(mwe$person) %>%
+        count_tags(mwe$person) %>%
         print(pretty = FALSE)
 
-    ##    person n.tokens $ . : CD DT IN NN NNS PRP TO VB VBP VBZ WP
-    ## 1:  Tyler       19 1 2 1  1  3  1  2   1   2  2  1   1   1  0
-    ## 2:  Norah        5 0 1 0  0  0  0  1   0   1  0  0   0   1  1
+    ##    person n.tokens $ . : CD DT IN NN NNS PRP TO VB VBP VBZ
+    ## 1:  Tyler       19 1 2 1  1  3  1  2   1   2  2  1   1   1
+    ## 2:  Norah       10 0 0 0  0  1  0  2   0   2  2  2   1   0
 
 Select Tags
 -----------
@@ -347,8 +322,8 @@ following call.
     ## 2911. do/VBP end/NN debates/NNS leave/VBP words/NNS ...
     ## 2912. night/NN
 
-Note that the output is a `tag_pos` class and the plotting, `count_pos`,
-and `as_word_tag` functions can be used on the result.
+Note that the output is a `tag_pos` class and the plotting,
+`count_tags`, and `as_word_tag` functions can be used on the result.
 
     presidential_debates_2012_pos %>%
         select_tags("^(VB|NN)", regex=TRUE) %>%
@@ -358,7 +333,7 @@ and `as_word_tag` functions can be used on the result.
 
     presidential_debates_2012_pos %>%
         select_tags("^(VB|NN)", regex=TRUE) %>%
-        count_pos()
+        count_tags()
 
     ## Source: local data frame [2,912 x 11]
     ## 
@@ -377,8 +352,8 @@ and `as_word_tag` functions can be used on the result.
     ## ..      ...       ...      ...   ...       ...      ...   ...      ...
     ## Variables not shown: VBN (chr), VBP (chr), VBZ (chr)
 
-As Tags
--------
+As Word Tags
+------------
 
 The traditional way to display tags is to incorporate them into the
 sentence, placing them before their respective token, separated by a
@@ -399,3 +374,17 @@ of `as_word_tag`.
     ## [4] "And/CC the/DT president/NN supports/VBZ taking/VBG dollar/NN seven/CD hundred/CD sixteen/CD billion/CD out/IN of/IN that/DT program/NN ./."
     ## [5] "And/CC what/WP about/IN the/DT vouchers/NNS ?/."                                                                                           
     ## [6] "So/IN that/DT 's/VBZ that/DT 's/VBZ number/NN one/CD ./."
+
+As Tuples
+---------
+
+**Python** uses a tuple construction of parts of speech to display tags.
+This can be a useful structure. Essentially the structure is a lists of
+lists of two element vectors. Each vector cotnains a word and a part of
+speech tag. `as_tuple` uses the following **R** structuring:
+
+    list(list(c("word", "tag"), c("word", "tag")), list(c("word", "tag")))
+
+but prints to the console in the **Python** way. Using
+`print(as_tuple(x), truncate=Inf, file="out.txt")` allows the user to
+print to an extrernal file.

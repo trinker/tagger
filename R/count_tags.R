@@ -17,12 +17,12 @@
 #' @importFrom data.table := .N .SD
 #' @examples
 #' data(presidential_debates_2012_pos) # pre tagged data
-#' count_pos(presidential_debates_2012_pos)
-#' count_pos(presidential_debates_2012_pos, by = presidential_debates_2012$person)
+#' count_tags(presidential_debates_2012_pos)
+#' count_tags(presidential_debates_2012_pos, by = presidential_debates_2012$person)
 #' with(presidential_debates_2012,
-#'     count_pos(presidential_debates_2012_pos, by = list(person, time))
+#'     count_tags(presidential_debates_2012_pos, by = list(person, time))
 #' )
-count_pos <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
+count_tags <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 
     n.tokens <- NULL
 
@@ -70,7 +70,7 @@ count_pos <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
         nms <- colnames(out)[!colnames(out) %in% c(G, "n.tokens")]
     }
 
-    class(out) <- c("count_pos", class(out))
+    class(out) <- c("count_tags", class(out))
     attributes(out)[["group.vars"]] <- G
     attributes(out)[["pos.vars"]] <- nms
     attributes(out)[["weight"]] <- "count"
@@ -79,11 +79,11 @@ count_pos <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 }
 
 
-#' Prints a count_pos Object
+#' Prints a count_tags Object
 #'
-#' Prints a count_pos object.
+#' Prints a count_tags object.
 #'
-#' @param x The count_pos object.
+#' @param x The count_tags object.
 #' @param digits The number of digits displayed.
 #' @param weight The weight type.  Currently the following are available:
 #' \code{"proportion"}, \code{"percent"}.  See \code{\link[termco]{weight}} for
@@ -95,9 +95,9 @@ count_pos <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 #' \code{pretty} printing can be permanantly removed with
 #' \code{\link[termco]{as_count}}.
 #' @param \ldots ignored
-#' @method print count_pos
+#' @method print count_tags
 #' @export
-print.count_pos <- function (x, digits = 1, weight = "percent", zero.replace = "0",
+print.count_tags <- function (x, digits = 1, weight = "percent", zero.replace = "0",
     pretty = getOption("tagger_pretty"), ...) {
 
     n.tokens <- count <- NULL
@@ -128,7 +128,7 @@ print.count_pos <- function (x, digits = 1, weight = "percent", zero.replace = "
     } else {
         extra <- NULL
     }
-    class(x) <- c(extra, class(x)[!class(x) %in% "count_pos"])
+    class(x) <- c(extra, class(x)[!class(x) %in% "count_tags"])
 
     print(x)
     ask <- getOption("tagger_pretty_ask")
@@ -137,7 +137,7 @@ print.count_pos <- function (x, digits = 1, weight = "percent", zero.replace = "
     }
     if (ask && ptime > 0.61 && interactive()) {
         message(paste0(paste(rep("=", 70), collapse = ""), "\n"),
-            "\nYour `count_pos` object is larger and is taking a while to print.\n",
+            "\nYour `count_tags` object is larger and is taking a while to print.\n",
             "You can reduce this time grouping.var using `as_count` or setting:\n\n`options(tagger_pretty = FALSE)`\n\n",
             "Would you like to globally set `options(tagger_pretty = FALSE)` now?\n")
         ans <- utils::menu(c("Yes", "No", "Not Now"))

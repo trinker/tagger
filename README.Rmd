@@ -33,12 +33,12 @@ knitr::opts_chunk$set(fig.path = "inst/figure/")
 
 The main functions and descriptions are listed in the table below.
 
-| Function         |  Description                                          |
-|------------------|-------------------------------------------------------|
-| `tag_pos`        | Tag                       |
-| `mark_word_stems`      | Highlight word stems                       |
-| `mark_regex`   | Highlight by regex                     |
-| `mark_sentences`   | Highlight sentences by `grepl`                      |
+| Function           |  Description                                        |
+|--------------------|-----------------------------------------------------|
+| `tag_pos`          | Tag parts of speech                                 |
+| `select_tags`      | Select specific part of speech tags from `tag_pos`  |
+| `count_tags`       | Cross tabs of tags by grouping variable             |
+
 
 # Installation
 
@@ -72,7 +72,7 @@ mwe <- data_frame(
     person = c("Tyler", "Norah", "Tyler"),
     talk = c(
         "I need $54 to go to the movies.",
-        "What time is it?",
+        "They refuse to permit us to obtain the refuse permit",
         "This is the tagger package; like it?"
     )
 )
@@ -126,14 +126,14 @@ The user can generate a count of the tags by grouping variable as well.  The num
 
 ```{r}
 tag_pos(mwe$talk) %>%
-    count_pos(mwe$person) 
+    count_tags(mwe$person) 
 ```
 
 The default is a pretty printing (counts + proportions) that can be turned off to print raw counts only.
 
 ```{r}
 tag_pos(mwe$talk) %>%
-    count_pos(mwe$person) %>%
+    count_tags(mwe$person) %>%
     print(pretty = FALSE)
 ```
 
@@ -162,7 +162,7 @@ presidential_debates_2012_pos %>%
     select_tags("^(VB|NN)", regex=TRUE)
 ```
 
-Note that the output is a `tag_pos` class and the plotting, `count_pos`, and `as_word_tag` functions can be used on the result.
+Note that the output is a `tag_pos` class and the plotting, `count_tags`, and `as_word_tag` functions can be used on the result.
 
 ```{r}
 presidential_debates_2012_pos %>%
@@ -173,10 +173,10 @@ presidential_debates_2012_pos %>%
 ```{r}
 presidential_debates_2012_pos %>%
     select_tags("^(VB|NN)", regex=TRUE) %>%
-    count_pos()
+    count_tags()
 ```
 
-## As Tags
+## As Word Tags
 
 The traditional way to display tags is to incorporate them into the sentence, placing them before their respective token, separated by a foward slash (e.g., *VB/talk*). This is the defualt printing style of `tag_pos` though not truly the structure of the output.  The user can coerce the underlying structure with the `as_word_tag` function, converting the named list of vectors into a list of part of speech incorporated, unnamed vectors.  Below I only print the first 6 elements of `as_word_tag`.
 
@@ -186,3 +186,12 @@ presidential_debates_2012_pos %>%
     head()
 ````
 
+## As Tuples
+
+**Python** uses a tuple construction of parts of speech to display tags.  This can be a useful structure.  Essentially the structure is a lists of lists of two element vectors.  Each vector cotnains a word and a part of speech tag.  `as_tuple` uses the following **R** structuring:
+
+```
+list(list(c("word", "tag"), c("word", "tag")), list(c("word", "tag")))
+```
+
+but prints to the console in the **Python** way.  Using `print(as_tuple(x), truncate=Inf, file="out.txt")` allows the user to print to an extrernal file.

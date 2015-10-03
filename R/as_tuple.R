@@ -1,25 +1,28 @@
 #' Combine Words + Tags Tuple
 #'
-#' A traditional tuple style of displaying words and tags in the same vector.
+#' A traditional \pkg{Python} tuple style of displaying words and tags in the
+#' same vector.
 #'
 #' @param x A \code{tag_pos} object or a named list of vectors.
 #' @param word.first logical.  If \code{TRUE} the word comes before the tag.
 #' @param \ldots ignored.
 #' @return Returns a lst of lists of tuples vectors..
 #' @export
+#' @note In order to generate a Python equivalent output use:\cr
+#' \code{print(as_tuple(x), truncate=Inf, file="out.txt")}
 #' @examples
 #' (x <- tag_pos("I need $54 to go to the movies."))
 #' c(x) ## The true structure of a `tag_pos` object
 #' as_tuple(c(x))
 #'
 #' ## Don't truncate the printing
-#' print(as_tuple(c(x)), truncate=FALSE)
+#' print(as_tuple(x), truncate=FALSE)
 #'
 #' ## Export tuple printing to file
 #' \dontrun{
-#' print(as_tuple(c(x)), truncate=Inf, file="out.txt")
+#' print(as_tuple(x), truncate=Inf, file="out.txt")
 #' }
-#' as_tuple(c(x), word.first=FALSE)
+#' as_tuple(x, word.first=FALSE)
 #'
 #' (out1 <- tag_pos(sam_i_am))
 #' as_tuple(c(out1))
@@ -43,7 +46,11 @@ as_tuple <- function(x, word.first = TRUE, ...){
 #' @method print as_tuple
 #' @export
 print.as_tuple <- function(x, truncate = 1500, ...){
-    y <- paste0("[", paste(unlist(lapply(x, tupleprint)), collapse=", "), "]")
+    y <- lapply(x, function(y) paste0("[", paste(tupleprint(y), collapse=", "), "]"))
+    y[sapply(y, function(x) x == "[NA]")] <- '[("", "")]'
+    if (length(y) > 1) {
+        y <- paste0("[", paste(unlist(y), collapse=", "), "]")
+    }
     if(!is.infinite(truncate)) y <- paste0(substring(y, 1, truncate), "...")
     cat(y, ...)
 }
