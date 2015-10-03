@@ -388,3 +388,9 @@ speech tag. `as_tuple` uses the following **R** structuring:
 but prints to the console in the **Python** way. Using
 `print(as_tuple(x), truncate=Inf, file="out.txt")` allows the user to
 print to an extrernal file.
+
+    tag_pos(mwe$talk) %>%
+        as_tuple() %>%
+        print(truncate=Inf)
+
+    ## [[("I", "PRP"), ("need", "VBP"), ("$", "$"), ("54", "CD"), ("to", "TO"), ("go", "VB"), ("to", "TO"), ("the", "DT"), ("movies", "NNS"), (".", ".")], [("They", "PRP"), ("refuse", "VBP"), ("to", "TO"), ("permit", "VB"), ("us", "PRP"), ("to", "TO"), ("obtain", "VB"), ("the", "DT"), ("refuse", "NN"), ("permit", "NN")], [("This", "DT"), ("is", "VBZ"), ("the", "DT"), ("tagger", "NN"), ("package", "NN"), (";", ":"), ("like", "IN"), ("it", "PRP"), ("?", ".")]]

@@ -195,3 +195,9 @@ list(list(c("word", "tag"), c("word", "tag")), list(c("word", "tag")))
 ```
 
 but prints to the console in the **Python** way.  Using `print(as_tuple(x), truncate=Inf, file="out.txt")` allows the user to print to an extrernal file.
+
+```{r}
+tag_pos(mwe$talk) %>%
+    as_tuple() %>%
+    print(truncate=Inf)
+```
