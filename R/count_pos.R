@@ -108,7 +108,7 @@ print.count_pos <- function (x, digits = 1, weight = "percent", zero.replace = "
     termcols <- attributes(x)[["pos.vars"]]
 
     id <- FALSE
-    if (is.null(attributes(x)[["group.var"]])) {suppressWarnings(x[, id:=1:.N]); id <- TRUE}
+    if (is.null(attributes(x)[["group.vars"]])) {suppressWarnings(x[, id:=1:.N]); id <- TRUE}
     if (is.count(x) & pretty & attributes(x)[["pretty"]]) {
         tall <- tidyr::gather_(x, "term", "count", termcols)
 

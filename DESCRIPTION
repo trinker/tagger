@@ -8,7 +8,7 @@ Description: Wraps the 'NLP' and 'openNLP' packages for easier part of
         speech tagging.
 Depends: R (>= 3.2.2)
 Suggests: testthat
-Imports: data.table, dplyr, methods, NLP, openNLP, parallel, stringi, termco,
+Imports: data.table, dplyr, methods, NLP, openNLP, stringi, termco,
         tidyr, utils, qdapTools
 Date: 2015-10-03
 License: GPL-2

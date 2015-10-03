@@ -7,6 +7,7 @@ output:
 ---
 
 ```{r, echo=FALSE}
+library(knitr)
 desc <- suppressWarnings(readLines("DESCRIPTION"))
 regex <- "(^Version:\\s+)(\\d+\\.\\d+\\.\\d+)"
 loc <- grep(regex, desc)
@@ -14,12 +15,30 @@ ver <- gsub(regex, "\\2", desc[loc])
 verbadge <- sprintf('<a href="https://img.shields.io/badge/Version-%s-orange.svg"><img src="https://img.shields.io/badge/Version-%s-orange.svg" alt="Version"/></a></p>', ver, ver)
 ````
 
-[![Build Status](https://travis-ci.org/trinker/tagger.svg?branch=master)](https://travis-ci.org/trinker/tagger)
-[![Coverage Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](https://coveralls.io/r/trinker/tagger?branch=master)
+```{r, echo=FALSE}
+knit_hooks$set(htmlcap = function(before, options, envir) {
+  if(!before) {
+    paste('<p class="caption"><b><em>',options$htmlcap,"</em></b></p>",sep="")
+    }
+    })
+knitr::opts_knit$set(self.contained = TRUE, cache = FALSE)
+knitr::opts_chunk$set(fig.path = "inst/figure/")
+```
 
-`r verbadge`
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)[![Build Status](https://travis-ci.org/trinker/tagger.svg?branch=master)](https://travis-ci.org/trinker/tagger)
+[![Coverage Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](https://coveralls.io/r/trinker/tagger?branch=master) `r verbadge`
 
-**tagger** wraps the **NLP** and **openNLP** packages for easier part of speech tagging.
+**tagger** wraps the **NLP** and **openNLP** packages for easier part of speech tagging.  **tagger** uses the **openNLP** annotator to compute "Penn Treebank parse annotations using the Apache OpenNLP chunking parser for English."  
+
+
+The main functions and descriptions are listed in the table below.
+
+| Function         |  Description                                          |
+|------------------|-------------------------------------------------------|
+| `tag_pos`        | Tag                       |
+| `mark_word_stems`      | Highlight word stems                       |
+| `mark_regex`   | Highlight by regex                     |
+| `mark_sentences`   | Highlight sentences by `grepl`                      |
 
 # Installation
 
@@ -38,3 +57,132 @@ You are welcome to:
 * submit suggestions and bug-reports at: <https://github.com/trinker/tagger/issues>
 * send a pull request on: <https://github.com/trinker/tagger/>
 * compose a friendly e-mail to: <tyler.rinker@gmail.com>
+
+
+# Examples
+
+The following examples demonstrate some of the functionality of **termco**.
+
+## Load the Tools/Data
+
+```{r}
+library(dplyr)
+data(presidential_debates_2012)
+mwe <- data_frame(
+    person = c("Tyler", "Norah", "Tyler"),
+    talk = c(
+        "I need $54 to go to the movies.",
+        "What time is it?",
+        "This is the tagger package; like it?"
+    )
+)
+```
+
+
+## Tagging
+
+Let's begin with a minimal example.
+
+```{r}
+tag_pos(mwe$talk)
+```
+
+Note that the out put pretty pints but the underlying structure is simply a lst of named vectors, where the elements in the vectors are te tokens and the names are the part of speech tags.  We can use `c` on the object to see it's true structure.
+
+```{r}
+tag_pos(mwe$talk) %>%
+    c()
+```
+
+Let's try it on a larger example, the built in `presidential_debates_2012` data set.  It'll take 30 seconds or so to run, depending on the machine.
+
+```{r}
+tag_pos(presidential_debates_2012$dialogue)
+```
+
+This output is built into **tagger** as the `presidential_debates_2012_pos` data set, wich we'll use form this point on in the demo.
+
+## Plotting
+
+The user can generate a horizontal barplot of the used tags.
+
+```{r}
+presidential_debates_2012_pos %>%
+    plot()
+```
+
+## Interpretting Tags
+
+The tags used by **openNLP** are utilize Penn Treebank.  As such there are many tags, more than the few parts of speech we learned in grade school.  Remember the meaning behind tags may be difficult, therefore the `penn_tags` creates a left alligned data frame of the possible tags and their meaning. 
+
+```{r}
+penn_tags()
+```
+
+## Counts
+
+The user can generate a count of the tags by grouping variable as well.  The number of columns explodes quickly, even with this minimal example.
+
+
+```{r}
+tag_pos(mwe$talk) %>%
+    count_pos(mwe$person) 
+```
+
+The default is a pretty printing (counts + proportions) that can be turned off to print raw counts only.
+
+```{r}
+tag_pos(mwe$talk) %>%
+    count_pos(mwe$person) %>%
+    print(pretty = FALSE)
+```
+
+## Select Tags
+
+The user may wish to select specific tags.  The `select_tags` function enables selection of specific tags via element matching (which can be negated) or regular expression. 
+
+Here we select only the nouns.  
+
+```{r}
+presidential_debates_2012_pos %>%
+    select_tags(c("NN", "NNP", "NNPS", "NNS"))
+```
+
+This could also have been accomplished with a simpler regex call by setting `regex = TRUE`.
+
+```{r}
+presidential_debates_2012_pos %>%
+    select_tags("NN", regex=TRUE)
+```
+
+In this way we could quickly select the nouns and verbs with the following call.
+
+```{r}
+presidential_debates_2012_pos %>%
+    select_tags("^(VB|NN)", regex=TRUE)
+```
+
+Note that the output is a `tag_pos` class and the plotting, `count_pos`, and `as_word_tag` functions can be used on the result.
+
+```{r}
+presidential_debates_2012_pos %>%
+    select_tags("^(VB|NN)", regex=TRUE) %>%
+    plot()
+```
+
+```{r}
+presidential_debates_2012_pos %>%
+    select_tags("^(VB|NN)", regex=TRUE) %>%
+    count_pos()
+```
+
+## As Tags
+
+The traditional way to display tags is to incorporate them into the sentence, placing them before their respective token, separated by a foward slash (e.g., *VB/talk*). This is the defualt printing style of `tag_pos` though not truly the structure of the output.  The user can coerce the underlying structure with the `as_word_tag` function, converting the named list of vectors into a list of part of speech incorporated, unnamed vectors.  Below I only print the first 6 elements of `as_word_tag`.
+
+```{r}
+presidential_debates_2012_pos %>%
+    as_word_tag() %>%
+    head()
+````
+

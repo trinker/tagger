@@ -16,5 +16,6 @@ penn_tags <- function(print = TRUE){
      return(invisible(penn_treebank_tags))
 }
 
-penn_treebank_tags <- NLP::Penn_Treebank_POS_tags[c("entry", "description")]
+penn_treebank_tags <- stats::setNames(NLP::Penn_Treebank_POS_tags[c("entry", "description")],
+    c("Tag", "Description"))
 

@@ -4,21 +4,11 @@
 \alias{tag_pos}
 \title{Tag Text with Parts of Speech}
 \usage{
-tag_pos(text.var, cores = parallel::detectCores() - 1,
-  parallel = ifelse(cores > 2, TRUE, FALSE), element.chunks = floor(2000 *
-  (23.5/mean(sapply(text.var, nchar), na.rm = TRUE))))
+tag_pos(text.var, element.chunks = floor(2000 * (23.5/mean(sapply(text.var,
+  nchar), na.rm = TRUE))))
 }
 \arguments{
 \item{text.var}{The text string variable.}
-
-\item{cores}{The number of cores to use if \code{parallel = TRUE}.  Default
-is available cores minus one.}
-
-\item{parallel}{logical.  If \code{TRUE} attempts to run the function on
-multiple cores.  Note that this may not mean a speed boost if you have one
-core or if the data set is smaller as the cluster takes time to create.  The
-function will not enable parallel unless the length of the text is sufficient
-(calculated using \code{element chunks} and length of \code{text.var}).}
 
 \item{element.chunks}{The number of elements to include in a chunk. Chunks are
 passed through an \code{\link[base]{lapply}} and size is kept within a tolerance
@@ -31,14 +21,15 @@ accessible through indexing.
 }
 \description{
 A wrapper for \pkg{NLP} and \pkg{openNLP} to easily tag text with parts of
-speech.
+speech.  The \pkg{openNLP} annotator "computes Penn Treebank parse annotations
+using the Apache OpenNLP chunking parser for English."
 }
 \examples{
 (x <- tag_pos("I need $54 to go to the movies."))
 c(x) ## The true structure of a `tag_pos` object
 
 (out1 <- tag_pos(sam_i_am))
-as_tags(out1)
+as_word_tag(out1)
 count_pos(out1)
 plot(out1)
 \dontrun{

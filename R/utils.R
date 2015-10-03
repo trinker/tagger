@@ -4,13 +4,6 @@ tagPOS <-  function(text.var, PTA, WTA, ...) {
     text.var <- gsub("^\\s+|\\s+$", "", text.var)
     s <- NLP::as.String(paste(text.var, collapse=""))
 
-    ## Set up the POS annotator if missing (for parallel)
-    if (missing(PTA)) {
-        PTA <- openNLP::Maxent_POS_Tag_Annotator()
-    }
-    if (missing(PTA)) {
-        WTA <- openNLP::Maxent_Word_Token_Annotator()
-    }
     ## Manually calculate the starts and ends via nchar
     lens <- sapply(text.var, nchar)
     ends <- cumsum(lens)

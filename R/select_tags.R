@@ -13,6 +13,7 @@
 #' @export
 #' @examples
 #' data(presidential_debates_2012_pos)
+#' library(dplyr)
 #'
 #' presidential_debates_2012_pos %>%
 #'     select_tags(c("NN", "NNP", "NNPS", "NNS"))

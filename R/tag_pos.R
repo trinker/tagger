@@ -1,16 +1,10 @@
 #' Tag Text with Parts of Speech
 #'
 #' A wrapper for \pkg{NLP} and \pkg{openNLP} to easily tag text with parts of
-#' speech.
+#' speech.  The \pkg{openNLP} annotator "computes Penn Treebank parse annotations
+#' using the Apache OpenNLP chunking parser for English."
 #'
 #' @param text.var The text string variable.
-#' @param cores The number of cores to use if \code{parallel = TRUE}.  Default
-#' is available cores minus one.
-#' @param parallel logical.  If \code{TRUE} attempts to run the function on
-#' multiple cores.  Note that this may not mean a speed boost if you have one
-#' core or if the data set is smaller as the cluster takes time to create.  The
-#' function will not enable parallel unless the length of the text is sufficient
-#' (calculated using \code{element chunks} and length of \code{text.var}).
 #' @param element.chunks The number of elements to include in a chunk. Chunks are
 #' passed through an \code{\link[base]{lapply}} and size is kept within a tolerance
 #' because of memory allocation in the tagging process with \pkg{Java}.
@@ -23,7 +17,7 @@
 #' c(x) ## The true structure of a `tag_pos` object
 #'
 #' (out1 <- tag_pos(sam_i_am))
-#' as_tags(out1)
+#' as_word_tag(out1)
 #' count_pos(out1)
 #' plot(out1)
 #' \dontrun{
@@ -33,13 +27,8 @@
 #' with(presidential_debates_2012, count_pos(out2, by = list(person, time)))
 #' plot(out2)
 #' }
-tag_pos <- function(text.var, cores = parallel::detectCores() - 1,
-    parallel = ifelse(cores > 2, TRUE, FALSE),
+tag_pos <- function(text.var,
     element.chunks = floor(2000 * (23.5/mean(sapply(text.var, nchar), na.rm = TRUE)))){
-
-    PTA <- openNLP::Maxent_POS_Tag_Annotator()
-    ## Need pos and word token annotations.
-    WTA <- openNLP::Maxent_Word_Token_Annotator()
 
     len <- length(text.var)
 
@@ -60,31 +49,16 @@ tag_pos <- function(text.var, cores = parallel::detectCores() - 1,
     ## chunk the text
     text_list <- Map(function(s, e) {text.var[s:e]}, starts, ends)
 
-    ## Decide whether or not to use parallel procesing
+    ## Need pos and word token annotations.
+    PTA <- openNLP::Maxent_POS_Tag_Annotator()
+    WTA <- openNLP::Maxent_Word_Token_Annotator()
+
     ## loop through the chunks and tag them
-    if (parallel & length(text_list) > 8) {
-
-        message("Using parallel process to tag.")
-        cl <- parallel::makeCluster(mc <- getOption("cl.cores", cores))
-        parallel::clusterExport(cl=cl, varlist=c("text_list", "tagPOS", "PTA",
-            "WTA"), envir = environment())
-        ## clusterEvalQ(cl, {require(NLP); require(openNLP)})
-        out <- unlist(parallel::parLapply(cl, text_list, function(x) {
-            x <- tagPOS(x, PTA, WTA)
-            gc()
-            return(x)
-        }), recursive = FALSE)
-
-        parallel::stopCluster(cl)
-
-    } else {
-        message("Not using parallel process to tag.")
-        out <- unlist(lapply(text_list, function(x){
-            x <- tagPOS(x, PTA, WTA)
-            gc()
-            x
-        }), recursive = FALSE)
-    }
+    out <- unlist(lapply(text_list, function(x){
+        x <- tagPOS(x, PTA, WTA)
+        gc()
+        x
+    }), recursive = FALSE)
 
     if(!identical(nas, integer(0))){
        out[nas] <- NA
@@ -93,6 +67,8 @@ tag_pos <- function(text.var, cores = parallel::detectCores() - 1,
     class(out) <- c("tag_pos", class(out))
     out
 }
+
+
 
 #' Prints a tag_pos Object
 #'
@@ -106,7 +82,7 @@ tag_pos <- function(text.var, cores = parallel::detectCores() - 1,
 #' @export
 print.tag_pos <- function(x, n = 10, width = .7 * getOption("width"), ...){
     n <- ceiling(10/2)
-    y <- as_tags(x)
+    y <- as_word_tag(x)
     if (length(y) <= 2*n) {
         print(y)
         #cat(sprintf("\n%s\n\nn = %s", paste(rep("*", 25), collapse="  "), length(y)))

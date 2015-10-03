@@ -11,15 +11,15 @@
 #' @examples
 #' (x <- tag_pos("I need $54 to go to the movies."))
 #' c(x) ## The true structure of a `tag_pos` object
-#' as_tags(c(x))
-#' as_tags(c(x), word.first=FALSE)
-#' as_tags(c(x), sep="|")
-#' gsub("([^ ]+)", "(\\1)", as_tags(c(x), sep="="))
+#' as_word_tag(c(x))
+#' as_word_tag(c(x), word.first=FALSE)
+#' as_word_tag(c(x), sep="|")
+#' gsub("([^ ]+)", "(\\1)", as_word_tag(c(x), sep="="))
 #'
 #' (out1 <- tag_pos(sam_i_am))
 #' c(out1)
-#' as_tags(c(out1))
-as_tags <- function(x, sep = "/", word.first = TRUE, ...){
+#' as_word_tag(c(out1))
+as_word_tag <- function(x, sep = "/", word.first = TRUE, ...){
     if (isTRUE(word.first)) {fun <- pastify1} else {fun <- pastify2}
     out <- unlist(lapply(x, function(y) paste(fun(y, sep=sep), collapse = " ")))
     out[out == "NA/"] <- NA
