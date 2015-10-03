@@ -1,6 +1,6 @@
-#' What the Package Does (one line)
+#' Part of Speech Tagging
 #'
-#' What the package does (one or more paragraphs)
+#' Wraps the \pkg{NLP} and \pkg{openNLP} packages for easier part of speech tagging.
 #' @docType package
 #' @name tagger
 #' @aliases tagger package-tagger
@@ -39,4 +39,17 @@ NULL
 #' @usage data(sam_i_am)
 #' @format A character vector with 169 elements
 #' @references Seuss, Dr. (1960). Green Eggs and Ham.
+NULL
+
+
+#' Parts of Speech for 2012 U.S. Presidential Debates Dialogue
+#'
+#' A dataset containing a list of named vectors of words.  The word names are the
+#' part of speech tags.
+#'
+#' @docType data
+#' @keywords datasets
+#' @name presidential_debates_2012_pos
+#' @usage data(presidential_debates_2012_pos)
+#' @format A list with 2912 elements
 NULL

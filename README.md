@@ -9,7 +9,8 @@ Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](http
 
 <a href="https://img.shields.io/badge/Version-0.0.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.1-orange.svg" alt="Version"/></a>
 </p>
-**tagger** is...
+**tagger** wraps the **NLP** and **openNLP** packages for easier part of
+speech tagging.
 
 
 Table of Contents
@@ -36,7 +37,7 @@ development version:
 Contact
 =======
 
-You are welcome to: \* submit suggestions and bug-reports at:
-<https://github.com/trinker/tagger/issues> \* send a pull request on:
-<https://github.com/trinker/tagger/> \* compose a friendly e-mail to:
-<tyler.rinker@gmail.com>
+You are welcome to: 
+* submit suggestions and bug-reports at: <https://github.com/trinker/tagger/issues> 
+* send a pull request on: <https://github.com/trinker/tagger/> 
+* compose a friendly e-mail to: <tyler.rinker@gmail.com>

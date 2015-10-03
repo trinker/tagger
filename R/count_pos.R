@@ -1,37 +1,50 @@
-#' Title
+#' Counts of Part of Speech Tags by Grouping Variable(s)
 #'
-#' Description
+#' Tabulate counts of part of speech tags by grouping variable(s).
 #'
-#' @param x
-#' @param by
-#' @param group.names
-#' @param pretty
-#' @param \ldots
-#' @return
-#' @references
-#' @keywords
+#' @param x A \code{tag_pos} object or a named list of vectors.
+#' @param grouping.var The grouping variable(s).  Default \code{NULL} generates
+#' one row for each element in \code{x}.
+#' @param group.names A vector of names that corresponds to group.var.  Generally
+#' for internal use.
+#' @param pretty logical.  If \code{TRUE} pretty printing is used.  Pretty
+#' printing can be turned off globally by setting
+#' \code{options(tagger_pretty = FALSE)}.
+#' @param \ldots ignored
+#' @return Returns a \code{\link[dplyr]{tbl_df}} of counts of parts of speech.
+#' @keywords count proportion
 #' @export
-#' @seealso
+#' @importFrom data.table := .N .SD
 #' @examples
-count_pos <- function(x, by = NULL, group.names, pretty = TRUE, ...){
+#' data(presidential_debates_2012_pos) # pre tagged data
+#' count_pos(presidential_debates_2012_pos)
+#' count_pos(presidential_debates_2012_pos, by = presidential_debates_2012$person)
+#' with(presidential_debates_2012,
+#'     count_pos(presidential_debates_2012_pos, by = list(person, time))
+#' )
+count_pos <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 
-    if (!is.null(by)){
-        if (is.list(by) & length(by) > 1) {
-            if (is.data.frame(by)) {
-                by <- as.list(by)
-                G <- names(by)
+    n.tokens <- NULL
+
+    if (!inherits(x, "tag_pos")) warning("Not a `tag_pos` object; results may be incorrect.")
+
+    if (!is.null(grouping.var)){
+        if (is.list(grouping.var) & length(grouping.var) > 1) {
+            if (is.data.frame(grouping.var)) {
+                grouping.var <- as.list(grouping.var)
+                G <- names(grouping.var)
             } else {
-                m <- unlist(as.character(substitute(by))[-1])
+                m <- unlist(as.character(substitute(grouping.var))[-1])
                 G <- sapply(strsplit(m, "$", fixed=TRUE), function(x) {
                     x[length(x)]
                 })
             }
-            grouping <- by
+            grouping <- grouping.var
         } else {
-            #if (is.data.frame(by)) by <- as.list(by)
-            G <- as.character(substitute(by))
+            #if (is.data.frame(grouping.var)) grouping.var <- as.list(grouping.var)
+            G <- as.character(substitute(grouping.var))
             G <- G[length(G)]
-            grouping <- unlist(by)
+            grouping <- unlist(grouping.var)
         }
 
         if(!missing(group.names)) {
@@ -40,6 +53,7 @@ count_pos <- function(x, by = NULL, group.names, pretty = TRUE, ...){
 
         group_dat <- stats::setNames(as.data.frame(grouping,
             stringsAsFactors = FALSE), G)
+        if(nrow(group_dat) != length(x)) stop("The `x` must be equal in length to `grouping.var`")
         out <- data.frame(group_dat, qdapTools::mtabulate(sapply(x, names)), check.names=FALSE)
         out <- data.table::setDT(out)[, lapply(.SD, sum, na.rm=TRUE), by=G]
         nms <- colnames(out)[!colnames(out) %in% G]
@@ -83,7 +97,7 @@ count_pos <- function(x, by = NULL, group.names, pretty = TRUE, ...){
 #' @param \ldots ignored
 #' @method print count_pos
 #' @export
-print.count_pos <- function (x, digits = 2, weight = "percent", zero.replace = "0",
+print.count_pos <- function (x, digits = 1, weight = "percent", zero.replace = "0",
     pretty = getOption("tagger_pretty"), ...) {
 
     n.tokens <- count <- NULL
@@ -117,23 +131,23 @@ print.count_pos <- function (x, digits = 2, weight = "percent", zero.replace = "
     class(x) <- c(extra, class(x)[!class(x) %in% "count_pos"])
 
     print(x)
-    ask <- getOption("pos_pretty_ask")
+    ask <- getOption("tagger_pretty_ask")
     if (is.null(ask)) {
         ask <- TRUE
     }
     if (ask && ptime > 0.61 && interactive()) {
         message(paste0(paste(rep("=", 70), collapse = ""), "\n"),
             "\nYour `count_pos` object is larger and is taking a while to print.\n",
-            "You can reduce this time by using `as_count` or setting:\n\n`options(pos_pretty = FALSE)`\n\n",
-            "Would you like to globally set `options(pos_pretty = FALSE)` now?\n")
+            "You can reduce this time grouping.var using `as_count` or setting:\n\n`options(tagger_pretty = FALSE)`\n\n",
+            "Would you like to globally set `options(tagger_pretty = FALSE)` now?\n")
         ans <- utils::menu(c("Yes", "No", "Not Now"))
         switch(ans, `1` = {
-            options(pos_pretty = FALSE)
-            options(pos_pretty_ask = FALSE)
+            options(tagger_pretty = FALSE)
+            options(tagger_pretty_ask = FALSE)
         }, `2` = {
-            options(pos_pretty_ask = FALSE)
+            options(tagger_pretty_ask = FALSE)
         }, `3` = {
-            options(pos_pretty_ask = TRUE)
+            options(tagger_pretty_ask = TRUE)
         })
     }
 }

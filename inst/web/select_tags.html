@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>select_tags. tagger 0.0.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">tagger 0.0.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Select Tags + Words From tag_pos Object</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>select_tags(x, tags, negate&nbsp;=&nbsp;FALSE, regex&nbsp;=&nbsp;FALSE, ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A <code>tag_pos</code> object or a named list of vectors.</dd>
+      <dt>tags</dt>
+      <dd>The tags (or regex of <code>regex = TRUE</code> to select.</dd>
+      <dt>negate</dt>
+      <dd>logical.  If <code>TRUE</code> and <code>regex = FALSE</code> the tags not
+matching <code>tags</code> are returned.</dd>
+      <dt>regex</dt>
+      <dd>logical.  If <code>TRUE</code> then <code>tag</code> will be grepped for as
+a regex.</dd>
+      <dt>...</dt>
+      <dd>Other arguments passed to <code><a href='http://www.inside-r.org/r-doc/base/grep'>grepl</a></code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Returns a list of selected part of speech tagged vectors.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Select part of speech tags and accompanying words.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>data(presidential_debates_2012_pos)
+
+presidential_debates_2012_pos %&gt;%
+    select_tags(c(&quot;NN&quot;, &quot;NNP&quot;, &quot;NNPS&quot;, &quot;NNS&quot;))
+</div>
+<div class='output'>1.    health/NN care/NN moment/NN
+2.    voucher/NN system/NN Governor/NNP
+3.    change/NN retirees/NNS retirees/NNS Medicare/NNP
+4.    president/NN dollar/NN program/NN
+5.    vouchers/NNS
+.
+.
+.
+2908. 
+2909. Gentlemen/NNS
+2910. end/NN year/NN debates/NNS Lynn/NNP University/NNP students/NNS
+2911. end/NN debates/NNS words/NNS mom/NN vote/NN
+2912. night/NN</div>
+<div class='input'>
+presidential_debates_2012_pos %&gt;%
+    select_tags(c(&quot;NN&quot;, &quot;NNP&quot;, &quot;NNPS&quot;, &quot;NNS&quot;)) %&gt;%
+    count_pos(presidential_debates_2012[, c(&quot;person&quot;, &quot;time&quot;)])
+</div>
+<strong class='error'>Error in lapply(.SD, sum, na.rm = TRUE): object &#39;.SD&#39; not found</strong>
+<div class='input'>
+presidential_debates_2012_pos %&gt;%
+    select_tags(&quot;NN&quot;, regex=TRUE) %&gt;%
+    count_pos(presidential_debates_2012[, c(&quot;person&quot;, &quot;time&quot;)])
+</div>
+<strong class='error'>Error in lapply(.SD, sum, na.rm = TRUE): object &#39;.SD&#39; not found</strong>
+<div class='input'>
+presidential_debates_2012_pos %&gt;%
+    select_tags(&quot;NN(\\b|[^S])&quot;, regex=TRUE) %&gt;%
+    count_pos(presidential_debates_2012[, c(&quot;person&quot;, &quot;time&quot;)])
+</div>
+<strong class='error'>Error in lapply(.SD, sum, na.rm = TRUE): object &#39;.SD&#39; not found</strong>
+<div class='input'>
+presidential_debates_2012_pos %&gt;%
+    select_tags(c(&quot;NN&quot;, &quot;NNP&quot;, &quot;NNPS&quot;, &quot;NNS&quot;), TRUE) %&gt;%
+    count_pos(presidential_debates_2012[, c(&quot;person&quot;, &quot;time&quot;)])
+</div>
+<strong class='error'>Error in lapply(.SD, sum, na.rm = TRUE): object &#39;.SD&#39; not found</strong></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>select_tags</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

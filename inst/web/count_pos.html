@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>count_pos. tagger 0.0.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">tagger 0.0.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Counts of Part of Speech Tags by Grouping Variable(s)</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>count_pos(x, grouping.var&nbsp;=&nbsp;NULL, group.names, pretty&nbsp;=&nbsp;TRUE, ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A <code>tag_pos</code> object or a named list of vectors.</dd>
+      <dt>grouping.var</dt>
+      <dd>The grouping variable(s).  Default <code>NULL</code> generates
+one row for each element in <code>x</code>.</dd>
+      <dt>group.names</dt>
+      <dd>A vector of names that corresponds to group.var.  Generally
+for internal use.</dd>
+      <dt>pretty</dt>
+      <dd>logical.  If <code>TRUE</code> pretty printing is used.  Pretty
+printing can be turned off globally by setting
+<code>options(tagger_pretty = FALSE)</code>.</dd>
+      <dt>...</dt>
+      <dd>ignored</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Returns a <code><a href='http://www.inside-r.org/packages/cran/dplyr/docs/tbl_df'>tbl_df</a></code> of counts of parts of speech.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Tabulate counts of part of speech tags by grouping variable(s).</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>data(presidential_debates_2012_pos) # pre tagged data
+count_pos(presidential_debates_2012_pos)
+</div>
+<strong class='error'>Error in `[.data.frame`(x, i, j): could not find function &quot;:=&quot;</strong>
+<div class='input'>count_pos(presidential_debates_2012_pos, by = presidential_debates_2012$person)
+</div>
+<strong class='error'>Error in `[.data.frame`(x, i, j): could not find function &quot;:=&quot;</strong>
+<div class='input'>with(presidential_debates_2012,
+    count_pos(presidential_debates_2012_pos, by = list(person, time))
+)
+</div>
+<strong class='error'>Error in `[.data.frame`(x, i, j): could not find function &quot;:=&quot;</strong></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>count_pos</li>
+    </ul>
+    <ul>
+      <li>count</li><li>proportion</li>
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

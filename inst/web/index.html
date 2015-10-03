@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Index. tagger 0.0.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">tagger 0.0.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <div class="row">
+  <div class="span8">
+    <h1>tagger</h1>
+
+<p><a href="https://travis-ci.org/trinker/tagger"><img src="https://travis-ci.org/trinker/tagger.svg?branch=master" alt="Build
+Status"/></a>
+<a href="https://coveralls.io/r/trinker/tagger?branch=master"><img src="https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master" alt="Coverage
+Status"/></a></p>
+
+<p><a href="https://img.shields.io/badge/Version-0.0.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.1-orange.svg" alt="Version"/></a>
+</p>
+<strong>tagger</strong> wraps the <strong>NLP</strong> and <strong>openNLP</strong> packages for easier part of
+speech tagging.</p>
+
+<h1>Table of Contents</h1>
+
+<ul>
+<li>  [Installation](#installation)</li>
+<li>  [Contact](#contact)</li>
+</ul>
+
+<h1>Installation</h1>
+
+<p>To download the development version of <strong>tagger</strong>:</p>
+
+<p>Download the <a href="https://github.com/trinker/tagger/zipball/master">zip
+ball</a> or <a href="https://github.com/trinker/tagger/tarball/master">tar
+ball</a>, decompress and
+run <code>R CMD INSTALL</code> on it, or use the <strong>pacman</strong> package to install the
+development version:</p>
+
+<pre><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)
+pacman::p_load_gh(&quot;trinker/tagger&quot;)
+</code></pre>
+
+<h1>Contact</h1>
+
+<p>You are welcome to: </p>
+
+<ul>
+<li>submit suggestions and bug-reports at: <a href="https://github.com/trinker/tagger/issues">https://github.com/trinker/tagger/issues</a> </li>
+<li>send a pull request on: <a href="https://github.com/trinker/tagger/">https://github.com/trinker/tagger/</a> </li>
+<li>compose a friendly e-mail to: <a href="mailto:tyler.rinker@gmail.com">tyler.rinker@gmail.com</a></li>
+</ul>
+
+
+    <h2>Help topics</h2>
+
+    <h3></h3>
+    <p>Function for&hellip;</p>
+
+    
+    <ul class="index">
+
+    </ul>
+    <h3></h3>
+    
+    
+    <ul class="index">
+        
+      <li>
+        <code><a href="as_tags.html">as_tags</a></code><br />Combine Words + Tags</li>
+            
+      <li>
+        <code><a href="count_pos.html">count_pos</a></code><br />Counts of Part of Speech Tags by Grouping Variable(s)</li>
+            
+      <li>
+        <code><a href="penn_tags.html">penn_tags</a></code><br />Penn Treebank Parts of Tags</li>
+            
+      <li>
+        <code><a href="plot.tag_pos.html">plot.tag_pos</a></code><br />Plots a tag_pos Object</li>
+            
+      <li>
+        <code><a href="presidential_debates_2012.html">presidential_debates_2012</a></code><br />2012 U.S. Presidential Debates</li>
+            
+      <li>
+        <code><a href="presidential_debates_2012_pos.html">presidential_debates_2012_pos</a></code><br />Parts of Speech for 2012 U.S. Presidential Debates Dialogue</li>
+            
+      <li>
+        <code><a href="print.count_pos.html">print.count_pos</a></code><br />Prints a count_pos Object</li>
+            
+      <li>
+        <code><a href="print.tag_pos.html">print.tag_pos</a></code><br />Prints a tag_pos Object</li>
+            
+      <li>
+        <code><a href="sam_i_am.html">sam_i_am</a></code><br />Sam I Am Text</li>
+            
+      <li>
+        <code><a href="select_tags.html">select_tags</a></code><br />Select Tags + Words From tag_pos Object</li>
+            
+      <li>
+        <code><a href="tag_pos.html">tag_pos</a></code><br />Tag Text with Parts of Speech</li>
+            
+      <li>
+        <code><a href="tagger.html">tagger</a></code>(package-tagger, tagger-package)<br />Part of Speech Tagging</li>
+    
+    </ul>
+  </div>
+  
+  <div class="span3 offset1">
+        
+    <h2>Dependencies</h2>
+    <ul>
+      
+      <li><strong>Imports</strong>: data.table, dplyr, NLP, openNLP, parallel, stringi, termco, tidyr, qdapTools</li>
+      <li><strong>Suggests</strong>: testthat</li>
+      
+    </ul>
+    <h2>Authors</h2>
+    <ul>
+      <li><a href="mailto:tyler.rinker@gmail.com">Tyler Rinker</a> [aut, cre]</li>
+    </ul>
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

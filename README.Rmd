@@ -19,7 +19,7 @@ verbadge <- sprintf('<a href="https://img.shields.io/badge/Version-%s-orange.svg
 
 `r verbadge`
 
-**tagger** is...
+**tagger** wraps the **NLP** and **openNLP** packages for easier part of speech tagging.
 
 # Installation
 

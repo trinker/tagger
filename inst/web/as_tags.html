@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>as_tags. tagger 0.0.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">tagger 0.0.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Combine Words + Tags</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>as_tags(x, sep&nbsp;=&nbsp;"/", word.first&nbsp;=&nbsp;TRUE, ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A <code>tag_pos</code> object or a named list of vectors.</dd>
+      <dt>sep</dt>
+      <dd>A separator to put between the word and the tag.</dd>
+      <dt>word.first</dt>
+      <dd>logical.  If <code>TRUE</code> the word comes before the tag.</dd>
+      <dt>...</dt>
+      <dd>ignored.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Returns a combined character vector of words and tags.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>A traditional style of displaying words and tags in the same vector.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>(x &lt;- tag_pos(&quot;I need $54 to go to the movies.&quot;))
+</div>
+<strong class='message'>Not using parallel process to tag.</strong>
+<div class='output'>[1] &quot;I/PRP need/VBP $/$ 54/CD to/TO go/VB to/TO the/DT movies/NNS ./.&quot;
+</div>
+<div class='input'>c(x) ## The true structure of a `tag_pos` object
+</div>
+<div class='output'>[[1]]
+     PRP      VBP        $       CD       TO       VB       TO       DT      NNS        . 
+     &quot;I&quot;   &quot;need&quot;      &quot;$&quot;     &quot;54&quot;     &quot;to&quot;     &quot;go&quot;     &quot;to&quot;    &quot;the&quot; &quot;movies&quot;      &quot;.&quot; 
+
+</div>
+<div class='input'>as_tags(c(x))
+</div>
+<div class='output'>[1] &quot;I/PRP need/VBP $/$ 54/CD to/TO go/VB to/TO the/DT movies/NNS ./.&quot;
+</div>
+<div class='input'>as_tags(c(x), word.first=FALSE)
+</div>
+<div class='output'>[1] &quot;PRP/I VBP/need $/$ CD/54 TO/to VB/go TO/to DT/the NNS/movies ./.&quot;
+</div>
+<div class='input'>as_tags(c(x), sep=&quot;|&quot;)
+</div>
+<div class='output'>[1] &quot;I|PRP need|VBP $|$ 54|CD to|TO go|VB to|TO the|DT movies|NNS .|.&quot;
+</div>
+<div class='input'>gsub(&quot;([^ ]+)&quot;, &quot;(\\1)&quot;, as_tags(c(x), sep=&quot;=&quot;))
+</div>
+<div class='output'>[1] &quot;(I=PRP) (need=VBP) ($=$) (54=CD) (to=TO) (go=VB) (to=TO) (the=DT) (movies=NNS) (.=.)&quot;
+</div>
+<div class='input'>
+(out1 &lt;- tag_pos(sam_i_am))
+</div>
+<strong class='message'>Not using parallel process to tag.</strong>
+<div class='output'>1.   I/PRP am/VBP Sam/NNP
+2.   Sam/NNP I/PRP am/VBP
+3.   NA
+4.   That/DT Sam-I-am/NNP !/.
+5.   That/DT Sam-I-am/NNP !/.
+.
+.
+.
+165. Say/VB !/. I/PRP will/MD eat/VB them/PRP anywhere/RB !/.
+166. I/PRP do/VBP so/RB like/IN
+167. green/JJ eggs/NNS and/CC ham/NN !/.
+168. Thank/VB you/PRP !/.
+169. Thank/VB you/PRP ,/, Sam-I-am/NNP !/.</div>
+<div class='input'>c(out1)
+</div>
+<div class='output'>[[1]]
+  PRP   VBP   NNP 
+  &quot;I&quot;  &quot;am&quot; &quot;Sam&quot; 
+
+[[2]]
+  NNP   PRP   VBP 
+&quot;Sam&quot;   &quot;I&quot;  &quot;am&quot; 
+
+[[3]]
+[1] NA
+
+[[4]]
+        DT        NNP          . 
+    &quot;That&quot; &quot;Sam-I-am&quot;        &quot;!&quot; 
+
+[[5]]
+        DT        NNP          . 
+    &quot;That&quot; &quot;Sam-I-am&quot;        &quot;!&quot; 
+
+[[6]]
+       PRP        VBP         RB         VB         DT        NNP          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;that&quot; &quot;Sam-I-am&quot;        &quot;!&quot; 
+
+[[7]]
+[1] NA
+
+[[8]]
+   VBP    PRP     VB 
+  &quot;Do&quot;  &quot;you&quot; &quot;like&quot; 
+
+[[9]]
+     JJ     NNS      CC      NN       . 
+&quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;?&quot; 
+
+[[10]]
+       PRP        VBP         RB         VB        PRP          ,        NNP          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[11]]
+   PRP    VBP     RB     VB 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; 
+
+[[12]]
+     JJ     NNS      CC      NN       . 
+&quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;.&quot; 
+
+[[13]]
+[1] NA
+
+[[14]]
+     MD     PRP      VB     PRP 
+&quot;Would&quot;   &quot;you&quot;  &quot;like&quot;  &quot;them&quot; 
+
+[[15]]
+     RB      CC      RB       . 
+ &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;?&quot; 
+
+[[16]]
+[1] NA
+
+[[17]]
+    PRP      MD      RB      VB     PRP 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;  &quot;like&quot;  &quot;them&quot; 
+
+[[18]]
+     RB      CC      RB       . 
+ &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[19]]
+       PRP         MD         RB         VB        PRP         RB          . 
+       &quot;I&quot;    &quot;would&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot; &quot;anywhere&quot;        &quot;.&quot; 
+
+[[20]]
+[1] NA
+
+[[21]]
+   PRP    VBP     RB     VB 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; 
+
+[[22]]
+     JJ     NNS      CC      NN       . 
+&quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;.&quot; 
+
+[[23]]
+       PRP        VBP         RB         VB        PRP          ,        NNP          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[24]]
+[1] NA
+
+[[25]]
+     MD     PRP      VB     PRP      IN      DT      NN       . 
+&quot;Would&quot;   &quot;you&quot;  &quot;like&quot;  &quot;them&quot;    &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;?&quot; 
+
+[[26]]
+     MD     PRP      VB     PRP      IN      DT      NN       . 
+&quot;Would&quot;   &quot;you&quot;  &quot;like&quot;  &quot;them&quot;  &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;?&quot; 
+
+[[27]]
+[1] NA
+
+[[28]]
+   PRP    VBP     RB     VB    PRP 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot; 
+
+[[29]]
+     IN      DT      NN       . 
+   &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;.&quot; 
+
+[[30]]
+   PRP    VBP     RB     VB    PRP 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot; 
+
+[[31]]
+     IN      DT      NN       . 
+ &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;.&quot; 
+
+[[32]]
+   PRP    VBP     RB     VB    PRP 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot; 
+
+[[33]]
+     RB      CC      RB       . 
+ &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[34]]
+   PRP    VBP     RB     VB    PRP 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot; 
+
+[[35]]
+        RB          . 
+&quot;anywhere&quot;        &quot;.&quot; 
+
+[[36]]
+   PRP    VBP     RB     VB 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; 
+
+[[37]]
+     JJ     NNS      CC      NN       . 
+&quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;.&quot; 
+
+[[38]]
+   PRP    VBP     RB     VB    PRP      , 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot;    &quot;,&quot; 
+
+[[39]]
+       NNP          . 
+&quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[40]]
+[1] NA
+
+[[41]]
+     MD     PRP      VB     PRP 
+&quot;Would&quot;   &quot;you&quot;   &quot;eat&quot;  &quot;them&quot; 
+
+[[42]]
+   IN    DT    NN     . 
+ &quot;in&quot;   &quot;a&quot; &quot;box&quot;   &quot;?&quot; 
+
+[[43]]
+     MD     PRP      VB     PRP 
+&quot;Would&quot;   &quot;you&quot;   &quot;eat&quot;  &quot;them&quot; 
+
+[[44]]
+    IN     DT     NN      . 
+&quot;with&quot;    &quot;a&quot;  &quot;fox&quot;    &quot;?&quot; 
+
+[[45]]
+[1] NA
+
+[[46]]
+   RB    IN    DT    NN     . 
+&quot;Not&quot;  &quot;in&quot;   &quot;a&quot; &quot;box&quot;   &quot;.&quot; 
+
+[[47]]
+    RB     IN     DT     NN      . 
+ &quot;Not&quot; &quot;with&quot;    &quot;a&quot;  &quot;fox&quot;    &quot;.&quot; 
+
+[[48]]
+     RB      IN      DT      NN       . 
+  &quot;Not&quot;    &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;.&quot; 
+
+[[49]]
+     RB      IN      DT      NN       . 
+  &quot;Not&quot;  &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;.&quot; 
+
+[[50]]
+    PRP      MD      RB      VB     PRP 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;   &quot;eat&quot;  &quot;them&quot; 
+
+[[51]]
+     RB      CC      RB       . 
+ &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[52]]
+       PRP         MD         RB         VB        PRP         RB          . 
+       &quot;I&quot;    &quot;would&quot;      &quot;not&quot;      &quot;eat&quot;     &quot;them&quot; &quot;anywhere&quot;        &quot;.&quot; 
+
+[[53]]
+    PRP      MD      RB      VB      JJ     NNS      CC      NN       . 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;   &quot;eat&quot; &quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;.&quot; 
+
+[[54]]
+       PRP        VBP         RB         VB        PRP          ,        NNP          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[55]]
+[1] NA
+
+[[56]]
+     MD     PRP       .      MD     PRP       .      IN      DT      NN       . 
+&quot;Would&quot;   &quot;you&quot;     &quot;?&quot; &quot;Could&quot;   &quot;you&quot;     &quot;?&quot;    &quot;In&quot;     &quot;a&quot;   &quot;car&quot;     &quot;?&quot; 
+
+[[57]]
+   NNP    PRP      .    NNP    PRP      .     RB    PRP    VBP      . 
+ &quot;Eat&quot; &quot;them&quot;    &quot;!&quot;  &quot;Eat&quot; &quot;them&quot;    &quot;!&quot; &quot;Here&quot; &quot;they&quot;  &quot;are&quot;    &quot;.&quot; 
+
+[[58]]
+    PRP      MD      RB       ,      MD      RB       ,      IN      DT      NN       . 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot; &quot;could&quot;   &quot;not&quot;     &quot;,&quot;    &quot;in&quot;     &quot;a&quot;   &quot;car&quot;     &quot;.&quot; 
+
+[[59]]
+[1] NA
+
+[[60]]
+   PRP     MD     VB    PRP      .    PRP     MD     VB      . 
+ &quot;You&quot;  &quot;may&quot; &quot;like&quot; &quot;them&quot;    &quot;.&quot;  &quot;You&quot; &quot;will&quot;  &quot;see&quot;    &quot;.&quot; 
+
+[[61]]
+   PRP     MD     VB    PRP     IN     DT     NN      . 
+ &quot;You&quot;  &quot;may&quot; &quot;like&quot; &quot;them&quot;   &quot;in&quot;    &quot;a&quot; &quot;tree&quot;    &quot;!&quot; 
+
+[[62]]
+[1] NA
+
+[[63]]
+    PRP      MD      RB       ,      MD      RB      IN      DT      NN       . 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot; &quot;could&quot;   &quot;not&quot;    &quot;in&quot;     &quot;a&quot;  &quot;tree&quot;     &quot;.&quot; 
+
+[[64]]
+   RB    IN    DT    NN     .   PRP    VB   PRP    VB     . 
+&quot;Not&quot;  &quot;in&quot;   &quot;a&quot; &quot;car&quot;   &quot;!&quot; &quot;You&quot; &quot;let&quot;  &quot;me&quot;  &quot;be&quot;   &quot;.&quot; 
+
+[[65]]
+[1] NA
+
+[[66]]
+   PRP    VBP     RB     VB    PRP     IN     DT     NN      . 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot;   &quot;in&quot;    &quot;a&quot;  &quot;box&quot;    &quot;.&quot; 
+
+[[67]]
+   PRP    VBP     RB     VB    PRP     IN     DT     NN      . 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot; &quot;with&quot;    &quot;a&quot;  &quot;fox&quot;    &quot;.&quot; 
+
+[[68]]
+    PRP     VBP      RB      VB     PRP      IN      DT      NN       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot;  &quot;them&quot;    &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;.&quot; 
+
+[[69]]
+    PRP     VBP      RB      VB     PRP      IN      DT      NN       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot;  &quot;them&quot;  &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;.&quot; 
+
+[[70]]
+    PRP     VBP      RB      VB     PRP      RB      CC      RB       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot;  &quot;them&quot;  &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[71]]
+       PRP        VBP         RB         VB        PRP         RB          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot; &quot;anywhere&quot;        &quot;.&quot; 
+
+[[72]]
+    PRP     VBP      RB      VB      JJ     NNS      CC      NN       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot; &quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;.&quot; 
+
+[[73]]
+       PRP        VBP         RB         VB        PRP          ,        NNP          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[74]]
+[1] NA
+
+[[75]]
+     DT      NN       .      DT      NN       . 
+    &quot;A&quot; &quot;train&quot;     &quot;!&quot;     &quot;A&quot; &quot;train&quot;     &quot;!&quot; 
+
+[[76]]
+     DT      NN       .      DT      NN       . 
+    &quot;A&quot; &quot;train&quot;     &quot;!&quot;     &quot;A&quot; &quot;train&quot;     &quot;!&quot; 
+
+[[77]]
+     MD     PRP       ,      MD     PRP       , 
+&quot;Could&quot;   &quot;you&quot;     &quot;,&quot; &quot;would&quot;   &quot;you&quot;     &quot;,&quot; 
+
+[[78]]
+     IN      DT      NN       . 
+   &quot;on&quot;     &quot;a&quot; &quot;train&quot;     &quot;?&quot; 
+
+[[79]]
+[1] NA
+
+[[80]]
+     RB      IN      DT      NN       .      RB      IN      DT      NN       . 
+  &quot;Not&quot;    &quot;in&quot;     &quot;a&quot; &quot;train&quot;     &quot;!&quot;   &quot;Not&quot;    &quot;in&quot;     &quot;a&quot;  &quot;tree&quot;     &quot;!&quot; 
+
+[[81]]
+   RB    IN    DT    NN     .   NNP     .    VB   PRP    VB     . 
+&quot;Not&quot;  &quot;in&quot;   &quot;a&quot; &quot;car&quot;   &quot;!&quot; &quot;Sam&quot;   &quot;!&quot; &quot;Let&quot;  &quot;me&quot;  &quot;be&quot;   &quot;!&quot; 
+
+[[82]]
+[1] NA
+
+[[83]]
+    PRP      MD      RB       ,      MD      RB       ,      IN      DT      NN       . 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot; &quot;could&quot;   &quot;not&quot;     &quot;,&quot;    &quot;in&quot;     &quot;a&quot;   &quot;box&quot;     &quot;.&quot; 
+
+[[84]]
+    PRP      MD      RB       ,      MD      RB       ,      IN      DT      NN       . 
+    &quot;I&quot; &quot;could&quot;   &quot;not&quot;     &quot;,&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot;  &quot;with&quot;     &quot;a&quot;   &quot;fox&quot;     &quot;.&quot; 
+
+[[85]]
+    PRP      MD      RB      VB     PRP      IN      DT      NN       . 
+    &quot;I&quot;  &quot;will&quot;   &quot;not&quot;   &quot;eat&quot;  &quot;them&quot;  &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;.&quot; 
+
+[[86]]
+    PRP      MD      RB      VB     PRP      IN      DT      NN       . 
+    &quot;I&quot;  &quot;will&quot;   &quot;not&quot;   &quot;eat&quot;  &quot;them&quot;    &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;.&quot; 
+
+[[87]]
+    PRP      MD      RB      VB     PRP      RB      CC      RB       . 
+    &quot;I&quot;  &quot;will&quot;   &quot;not&quot;   &quot;eat&quot;  &quot;them&quot;  &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[88]]
+       PRP         MD         RB         VB        PRP         RB          . 
+       &quot;I&quot;     &quot;will&quot;      &quot;not&quot;      &quot;eat&quot;     &quot;them&quot; &quot;anywhere&quot;        &quot;.&quot; 
+
+[[89]]
+    PRP     VBP      RB      VB      JJ     NNS      CC      NN       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot; &quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;  &quot;spam&quot;     &quot;.&quot; 
+
+[[90]]
+       PRP        VBP         RB         VB        PRP          ,        NNP          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[91]]
+[1] NA
+
+[[92]]
+    VB      .     IN     DT     NN      . 
+ &quot;Say&quot;    &quot;!&quot;   &quot;In&quot;  &quot;the&quot; &quot;dark&quot;    &quot;?&quot; 
+
+[[93]]
+    RB     IN     DT     NN      . 
+&quot;Here&quot;   &quot;in&quot;  &quot;the&quot; &quot;dark&quot;    &quot;!&quot; 
+
+[[94]]
+     MD     PRP       ,      MD     PRP       , 
+&quot;Would&quot;   &quot;you&quot;     &quot;,&quot; &quot;could&quot;   &quot;you&quot;     &quot;,&quot; 
+
+[[95]]
+    IN     DT     NN      . 
+  &quot;in&quot;  &quot;the&quot; &quot;dark&quot;    &quot;?&quot; 
+
+[[96]]
+[1] NA
+
+[[97]]
+    PRP      MD      RB       ,      MD      RB       ,      IN      DT      NN       . 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot; &quot;could&quot;   &quot;not&quot;     &quot;,&quot;    &quot;in&quot;   &quot;the&quot;  &quot;dark&quot;     &quot;.&quot; 
+
+[[98]]
+[1] NA
+
+[[99]]
+     MD     PRP       ,      MD     PRP       ,      IN      DT      NN       . 
+&quot;Would&quot;   &quot;you&quot;     &quot;,&quot; &quot;could&quot;   &quot;you&quot;     &quot;,&quot;    &quot;in&quot;   &quot;the&quot;  &quot;rain&quot;     &quot;?&quot; 
+
+[[100]]
+[1] NA
+
+[[101]]
+    PRP      MD      RB       ,      MD      RB       ,      IN      DT      NN       . 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot; &quot;could&quot;   &quot;not&quot;     &quot;,&quot;    &quot;in&quot;   &quot;the&quot;  &quot;rain&quot;     &quot;.&quot; 
+
+[[102]]
+     RB      IN      DT      JJ       .      RB      IN      DT      NN       . 
+  &quot;Not&quot;    &quot;in&quot;   &quot;the&quot;  &quot;dark&quot;     &quot;.&quot;   &quot;Not&quot;    &quot;on&quot;     &quot;a&quot; &quot;train&quot;     &quot;.&quot; 
+
+[[103]]
+    RB     IN     DT     NN      .     RB     IN     DT     NN      . 
+ &quot;Not&quot;   &quot;in&quot;    &quot;a&quot;  &quot;car&quot;    &quot;.&quot;  &quot;Not&quot;   &quot;in&quot;    &quot;a&quot; &quot;tree&quot;    &quot;.&quot; 
+
+[[104]]
+   PRP    VBP     RB     VB    PRP      ,    NNP      ,    PRP    VBP      . 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot;    &quot;,&quot;  &quot;Sam&quot;    &quot;,&quot;  &quot;you&quot;  &quot;see&quot;    &quot;.&quot; 
+
+[[105]]
+     RB      IN      DT      NN       .      RB      IN      DT      NN       . 
+  &quot;Not&quot;    &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;.&quot;   &quot;Not&quot;    &quot;in&quot;     &quot;a&quot;   &quot;box&quot;     &quot;.&quot; 
+
+[[106]]
+     RB      IN      DT      NN       .      RB      IN      DT      NN       . 
+  &quot;Not&quot;  &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;.&quot;   &quot;Not&quot;  &quot;with&quot;     &quot;a&quot;   &quot;fox&quot;     &quot;.&quot; 
+
+[[107]]
+    PRP      MD      RB      VB     PRP      RB      CC      RB       . 
+    &quot;I&quot;  &quot;will&quot;   &quot;not&quot;   &quot;eat&quot;  &quot;them&quot;  &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[108]]
+       PRP        VBP         RB         VB        PRP         RB          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot; &quot;anywhere&quot;        &quot;!&quot; 
+
+[[109]]
+[1] NA
+
+[[110]]
+   PRP    VBP     RB     VB 
+ &quot;You&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; 
+
+[[111]]
+     JJ     NNS      CC      NN       . 
+&quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;?&quot; 
+
+[[112]]
+   PRP    VBP     RB     VB    PRP      , 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot;    &quot;,&quot; 
+
+[[113]]
+       NNP          . 
+&quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[114]]
+[1] NA
+
+[[115]]
+     MD     PRP       ,      MD     PRP       , 
+&quot;Could&quot;   &quot;you&quot;     &quot;,&quot; &quot;would&quot;   &quot;you&quot;     &quot;,&quot; 
+
+[[116]]
+    IN     DT     NN      . 
+&quot;with&quot;    &quot;a&quot; &quot;goat&quot;    &quot;?&quot; 
+
+[[117]]
+[1] NA
+
+[[118]]
+    PRP      MD      RB       ,      MD      RB       , 
+    &quot;I&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot; &quot;could&quot;   &quot;not&quot;     &quot;,&quot; 
+
+[[119]]
+    IN     DT     NN      . 
+&quot;with&quot;    &quot;a&quot; &quot;goat&quot;    &quot;!&quot; 
+
+[[120]]
+[1] NA
+
+[[121]]
+     MD     PRP       ,      MD     PRP       , 
+&quot;Would&quot;   &quot;you&quot;     &quot;,&quot; &quot;could&quot;   &quot;you&quot;     &quot;,&quot; 
+
+[[122]]
+    IN     DT     NN      . 
+  &quot;on&quot;    &quot;a&quot; &quot;boat&quot;    &quot;?&quot; 
+
+[[123]]
+[1] NA
+
+[[124]]
+    PRP      MD      RB       ,      MD      RB       , 
+    &quot;I&quot; &quot;could&quot;   &quot;not&quot;     &quot;,&quot; &quot;would&quot;   &quot;not&quot;     &quot;,&quot; 
+
+[[125]]
+    IN     DT     NN      . 
+  &quot;on&quot;    &quot;a&quot; &quot;boat&quot;    &quot;.&quot; 
+
+[[126]]
+   PRP     MD     RB      ,     MD     RB      , 
+   &quot;I&quot; &quot;will&quot;  &quot;not&quot;    &quot;,&quot; &quot;will&quot;  &quot;not&quot;    &quot;,&quot; 
+
+[[127]]
+    IN     DT     NN      . 
+&quot;with&quot;    &quot;a&quot; &quot;goat&quot;    &quot;.&quot; 
+
+[[128]]
+[1] NA
+
+[[129]]
+   PRP     MD     RB     VB    PRP     IN     DT     NN      . 
+   &quot;I&quot; &quot;will&quot;  &quot;not&quot;  &quot;eat&quot; &quot;them&quot;   &quot;in&quot;  &quot;the&quot; &quot;rain&quot;    &quot;.&quot; 
+
+[[130]]
+    PRP      MD      RB      VB     PRP      IN      DT      NN       . 
+    &quot;I&quot;  &quot;will&quot;   &quot;not&quot;   &quot;eat&quot;  &quot;them&quot;    &quot;on&quot;     &quot;a&quot; &quot;train&quot;     &quot;.&quot; 
+
+[[131]]
+    RB     IN     DT     NN      .     RB     IN     DT     NN      . 
+ &quot;Not&quot;   &quot;in&quot;  &quot;the&quot; &quot;dark&quot;    &quot;!&quot;  &quot;Not&quot;   &quot;in&quot;    &quot;a&quot; &quot;tree&quot;    &quot;!&quot; 
+
+[[132]]
+   RB    IN    DT    NN     .   PRP    VB   PRP    VB     . 
+&quot;Not&quot;  &quot;in&quot;   &quot;a&quot; &quot;car&quot;   &quot;!&quot; &quot;You&quot; &quot;let&quot;  &quot;me&quot;  &quot;be&quot;   &quot;!&quot; 
+
+[[133]]
+   PRP    VBP     RB     VB    PRP     IN     DT     NN      . 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot;   &quot;in&quot;    &quot;a&quot;  &quot;box&quot;    &quot;.&quot; 
+
+[[134]]
+   PRP    VBP     RB     VB    PRP     IN     DT     NN      . 
+   &quot;I&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot; &quot;with&quot;    &quot;a&quot;  &quot;fox&quot;    &quot;.&quot; 
+
+[[135]]
+    PRP      MD      RB      VB     PRP      IN      DT      NN       . 
+    &quot;I&quot;  &quot;will&quot;   &quot;not&quot;   &quot;eat&quot;  &quot;them&quot;    &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;.&quot; 
+
+[[136]]
+    PRP     VBP      RB      VB     PRP      IN      DT      NN       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot;  &quot;them&quot;  &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;.&quot; 
+
+[[137]]
+    PRP     VBP      RB      VB     PRP      RB      CC      RB       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot;  &quot;them&quot;  &quot;here&quot;    &quot;or&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[138]]
+       PRP        VBP         RB         VB        PRP         RB          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot; &quot;anywhere&quot;        &quot;!&quot; 
+
+[[139]]
+    PRP     VBP      RB      VB      JJ     NNS      CC      NN       . 
+    &quot;I&quot;    &quot;do&quot;   &quot;not&quot;  &quot;like&quot; &quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;!&quot; 
+
+[[140]]
+       PRP        VBP         RB         VB        PRP          ,        NNP          . 
+       &quot;I&quot;       &quot;do&quot;      &quot;not&quot;     &quot;like&quot;     &quot;them&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;.&quot; 
+
+[[141]]
+[1] NA
+
+[[142]]
+[1] NA
+
+[[143]]
+   PRP    VBP     RB     VB    PRP      .     IN    PRP    VBP      . 
+ &quot;You&quot;   &quot;do&quot;  &quot;not&quot; &quot;like&quot; &quot;them&quot;    &quot;.&quot;   &quot;So&quot;  &quot;you&quot;  &quot;say&quot;    &quot;.&quot; 
+
+[[144]]
+    VB    PRP      .     VB    PRP      .     CC    PRP     MD      . 
+ &quot;Try&quot; &quot;them&quot;    &quot;!&quot;  &quot;Try&quot; &quot;them&quot;    &quot;!&quot;  &quot;And&quot;  &quot;you&quot;  &quot;may&quot;    &quot;.&quot; 
+
+[[145]]
+    VB    PRP     CC    PRP     MD      ,    PRP    VBP      . 
+ &quot;Try&quot; &quot;them&quot;  &quot;and&quot;  &quot;you&quot;  &quot;may&quot;    &quot;,&quot;    &quot;I&quot;  &quot;say&quot;    &quot;.&quot; 
+
+[[146]]
+[1] NA
+
+[[147]]
+   NNP      .     IN    PRP     MD     VB    PRP     VB      , 
+ &quot;Sam&quot;    &quot;!&quot;   &quot;If&quot;  &quot;you&quot; &quot;will&quot;  &quot;let&quot;   &quot;me&quot;   &quot;be&quot;    &quot;,&quot; 
+
+[[148]]
+   PRP     MD     VB    PRP      .    PRP     MD     VB      . 
+   &quot;I&quot; &quot;will&quot;  &quot;try&quot; &quot;them&quot;    &quot;.&quot;  &quot;You&quot; &quot;will&quot;  &quot;see&quot;    &quot;.&quot; 
+
+[[149]]
+[1] NA
+
+[[150]]
+     VB       .     PRP      IN      JJ     NNS      CC      NN       . 
+  &quot;Say&quot;     &quot;!&quot;     &quot;I&quot;  &quot;like&quot; &quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;!&quot; 
+
+[[151]]
+       PRP        VBP          .        PRP         IN        PRP          ,        NNP          . 
+       &quot;I&quot;       &quot;do&quot;        &quot;!&quot;        &quot;I&quot;     &quot;like&quot;     &quot;them&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;!&quot; 
+
+[[152]]
+     CC     PRP      MD      VB     PRP      IN      DT      NN       . 
+  &quot;And&quot;     &quot;I&quot; &quot;would&quot;   &quot;eat&quot;  &quot;them&quot;    &quot;in&quot;     &quot;a&quot;  &quot;boat&quot;     &quot;.&quot; 
+
+[[153]]
+     CC     PRP      MD      VB     PRP      IN      DT      NN       : 
+  &quot;And&quot;     &quot;I&quot; &quot;would&quot;   &quot;eat&quot;  &quot;them&quot;  &quot;with&quot;     &quot;a&quot;  &quot;goat&quot;   &quot;...&quot; 
+
+[[154]]
+[1] NA
+
+[[155]]
+    CC    PRP     MD     VB    PRP     IN     DT     NN      . 
+ &quot;And&quot;    &quot;I&quot; &quot;will&quot;  &quot;eat&quot; &quot;them&quot;   &quot;in&quot;  &quot;the&quot; &quot;rain&quot;    &quot;.&quot; 
+
+[[156]]
+     CC      IN      DT      NN       .      CC      IN      DT      NN       . 
+  &quot;And&quot;    &quot;in&quot;   &quot;the&quot;  &quot;dark&quot;     &quot;.&quot;   &quot;And&quot;    &quot;on&quot;     &quot;a&quot; &quot;train&quot;     &quot;.&quot; 
+
+[[157]]
+    CC     IN     DT     NN      .     CC     IN     DT     NN      . 
+ &quot;And&quot;   &quot;in&quot;    &quot;a&quot;  &quot;car&quot;    &quot;.&quot;  &quot;And&quot;   &quot;in&quot;    &quot;a&quot; &quot;tree&quot;    &quot;.&quot; 
+
+[[158]]
+   PRP    VBP     RB     JJ      ,     RB     JJ      ,    PRP    VBP      . 
+&quot;They&quot;  &quot;are&quot;   &quot;so&quot; &quot;good&quot;    &quot;,&quot;   &quot;so&quot; &quot;good&quot;    &quot;,&quot;  &quot;you&quot;  &quot;see&quot;    &quot;!&quot; 
+
+[[159]]
+[1] NA
+
+[[160]]
+    IN    PRP     MD     VB    PRP     IN     DT     NN      . 
+  &quot;So&quot;    &quot;I&quot; &quot;will&quot;  &quot;eat&quot; &quot;them&quot;   &quot;in&quot;    &quot;a&quot;  &quot;box&quot;    &quot;.&quot; 
+
+[[161]]
+    CC    PRP     MD     VB    PRP     IN     DT     NN      . 
+ &quot;And&quot;    &quot;I&quot; &quot;will&quot;  &quot;eat&quot; &quot;them&quot; &quot;with&quot;    &quot;a&quot;  &quot;fox&quot;    &quot;.&quot; 
+
+[[162]]
+     CC     PRP      MD      VB     PRP      IN      DT      NN       . 
+  &quot;And&quot;     &quot;I&quot;  &quot;will&quot;   &quot;eat&quot;  &quot;them&quot;    &quot;in&quot;     &quot;a&quot; &quot;house&quot;     &quot;.&quot; 
+
+[[163]]
+     CC     PRP      MD      VB     PRP      IN      DT      NN       . 
+  &quot;And&quot;     &quot;I&quot;  &quot;will&quot;   &quot;eat&quot;  &quot;them&quot;  &quot;with&quot;     &quot;a&quot; &quot;mouse&quot;     &quot;.&quot; 
+
+[[164]]
+     CC     PRP      MD      VB     PRP      RB      CC      RB       . 
+  &quot;And&quot;     &quot;I&quot;  &quot;will&quot;   &quot;eat&quot;  &quot;them&quot;  &quot;here&quot;   &quot;and&quot; &quot;there&quot;     &quot;.&quot; 
+
+[[165]]
+        VB          .        PRP         MD         VB        PRP         RB          . 
+     &quot;Say&quot;        &quot;!&quot;        &quot;I&quot;     &quot;will&quot;      &quot;eat&quot;     &quot;them&quot; &quot;anywhere&quot;        &quot;!&quot; 
+
+[[166]]
+   PRP    VBP     RB     IN 
+   &quot;I&quot;   &quot;do&quot;   &quot;so&quot; &quot;like&quot; 
+
+[[167]]
+     JJ     NNS      CC      NN       . 
+&quot;green&quot;  &quot;eggs&quot;   &quot;and&quot;   &quot;ham&quot;     &quot;!&quot; 
+
+[[168]]
+     VB     PRP       . 
+&quot;Thank&quot;   &quot;you&quot;     &quot;!&quot; 
+
+[[169]]
+        VB        PRP          ,        NNP          . 
+   &quot;Thank&quot;      &quot;you&quot;        &quot;,&quot; &quot;Sam-I-am&quot;        &quot;!&quot; 
+
+</div>
+<div class='input'>as_tags(c(out1))
+</div>
+<div class='output'>  [1] &quot;I/PRP am/VBP Sam/NNP&quot;                                                    
+  [2] &quot;Sam/NNP I/PRP am/VBP&quot;                                                    
+  [3] NA                                                                        
+  [4] &quot;That/DT Sam-I-am/NNP !/.&quot;                                                
+  [5] &quot;That/DT Sam-I-am/NNP !/.&quot;                                                
+  [6] &quot;I/PRP do/VBP not/RB like/VB that/DT Sam-I-am/NNP !/.&quot;                    
+  [7] NA                                                                        
+  [8] &quot;Do/VBP you/PRP like/VB&quot;                                                  
+  [9] &quot;green/JJ eggs/NNS and/CC ham/NN ?/.&quot;                                     
+ [10] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/, Sam-I-am/NNP ./.&quot;               
+ [11] &quot;I/PRP do/VBP not/RB like/VB&quot;                                             
+ [12] &quot;green/JJ eggs/NNS and/CC ham/NN ./.&quot;                                     
+ [13] NA                                                                        
+ [14] &quot;Would/MD you/PRP like/VB them/PRP&quot;                                       
+ [15] &quot;here/RB or/CC there/RB ?/.&quot;                                              
+ [16] NA                                                                        
+ [17] &quot;I/PRP would/MD not/RB like/VB them/PRP&quot;                                  
+ [18] &quot;here/RB or/CC there/RB ./.&quot;                                              
+ [19] &quot;I/PRP would/MD not/RB like/VB them/PRP anywhere/RB ./.&quot;                  
+ [20] NA                                                                        
+ [21] &quot;I/PRP do/VBP not/RB like/VB&quot;                                             
+ [22] &quot;green/JJ eggs/NNS and/CC ham/NN ./.&quot;                                     
+ [23] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/, Sam-I-am/NNP ./.&quot;               
+ [24] NA                                                                        
+ [25] &quot;Would/MD you/PRP like/VB them/PRP in/IN a/DT house/NN ?/.&quot;               
+ [26] &quot;Would/MD you/PRP like/VB them/PRP with/IN a/DT mouse/NN ?/.&quot;             
+ [27] NA                                                                        
+ [28] &quot;I/PRP do/VBP not/RB like/VB them/PRP&quot;                                    
+ [29] &quot;in/IN a/DT house/NN ./.&quot;                                                 
+ [30] &quot;I/PRP do/VBP not/RB like/VB them/PRP&quot;                                    
+ [31] &quot;with/IN a/DT mouse/NN ./.&quot;                                               
+ [32] &quot;I/PRP do/VBP not/RB like/VB them/PRP&quot;                                    
+ [33] &quot;here/RB or/CC there/RB ./.&quot;                                              
+ [34] &quot;I/PRP do/VBP not/RB like/VB them/PRP&quot;                                    
+ [35] &quot;anywhere/RB ./.&quot;                                                         
+ [36] &quot;I/PRP do/VBP not/RB like/VB&quot;                                             
+ [37] &quot;green/JJ eggs/NNS and/CC ham/NN ./.&quot;                                     
+ [38] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/,&quot;                                
+ [39] &quot;Sam-I-am/NNP ./.&quot;                                                        
+ [40] NA                                                                        
+ [41] &quot;Would/MD you/PRP eat/VB them/PRP&quot;                                        
+ [42] &quot;in/IN a/DT box/NN ?/.&quot;                                                   
+ [43] &quot;Would/MD you/PRP eat/VB them/PRP&quot;                                        
+ [44] &quot;with/IN a/DT fox/NN ?/.&quot;                                                 
+ [45] NA                                                                        
+ [46] &quot;Not/RB in/IN a/DT box/NN ./.&quot;                                            
+ [47] &quot;Not/RB with/IN a/DT fox/NN ./.&quot;                                          
+ [48] &quot;Not/RB in/IN a/DT house/NN ./.&quot;                                          
+ [49] &quot;Not/RB with/IN a/DT mouse/NN ./.&quot;                                        
+ [50] &quot;I/PRP would/MD not/RB eat/VB them/PRP&quot;                                   
+ [51] &quot;here/RB or/CC there/RB ./.&quot;                                              
+ [52] &quot;I/PRP would/MD not/RB eat/VB them/PRP anywhere/RB ./.&quot;                   
+ [53] &quot;I/PRP would/MD not/RB eat/VB green/JJ eggs/NNS and/CC ham/NN ./.&quot;        
+ [54] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/, Sam-I-am/NNP ./.&quot;               
+ [55] NA                                                                        
+ [56] &quot;Would/MD you/PRP ?/. Could/MD you/PRP ?/. In/IN a/DT car/NN ?/.&quot;         
+ [57] &quot;Eat/NNP them/PRP !/. Eat/NNP them/PRP !/. Here/RB they/PRP are/VBP ./.&quot;  
+ [58] &quot;I/PRP would/MD not/RB ,/, could/MD not/RB ,/, in/IN a/DT car/NN ./.&quot;     
+ [59] NA                                                                        
+ [60] &quot;You/PRP may/MD like/VB them/PRP ./. You/PRP will/MD see/VB ./.&quot;          
+ [61] &quot;You/PRP may/MD like/VB them/PRP in/IN a/DT tree/NN !/.&quot;                  
+ [62] NA                                                                        
+ [63] &quot;I/PRP would/MD not/RB ,/, could/MD not/RB in/IN a/DT tree/NN ./.&quot;        
+ [64] &quot;Not/RB in/IN a/DT car/NN !/. You/PRP let/VB me/PRP be/VB ./.&quot;            
+ [65] NA                                                                        
+ [66] &quot;I/PRP do/VBP not/RB like/VB them/PRP in/IN a/DT box/NN ./.&quot;              
+ [67] &quot;I/PRP do/VBP not/RB like/VB them/PRP with/IN a/DT fox/NN ./.&quot;            
+ [68] &quot;I/PRP do/VBP not/RB like/VB them/PRP in/IN a/DT house/NN ./.&quot;            
+ [69] &quot;I/PRP do/VBP not/RB like/VB them/PRP with/IN a/DT mouse/NN ./.&quot;          
+ [70] &quot;I/PRP do/VBP not/RB like/VB them/PRP here/RB or/CC there/RB ./.&quot;         
+ [71] &quot;I/PRP do/VBP not/RB like/VB them/PRP anywhere/RB ./.&quot;                    
+ [72] &quot;I/PRP do/VBP not/RB like/VB green/JJ eggs/NNS and/CC ham/NN ./.&quot;         
+ [73] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/, Sam-I-am/NNP ./.&quot;               
+ [74] NA                                                                        
+ [75] &quot;A/DT train/NN !/. A/DT train/NN !/.&quot;                                     
+ [76] &quot;A/DT train/NN !/. A/DT train/NN !/.&quot;                                     
+ [77] &quot;Could/MD you/PRP ,/, would/MD you/PRP ,/,&quot;                               
+ [78] &quot;on/IN a/DT train/NN ?/.&quot;                                                 
+ [79] NA                                                                        
+ [80] &quot;Not/RB in/IN a/DT train/NN !/. Not/RB in/IN a/DT tree/NN !/.&quot;            
+ [81] &quot;Not/RB in/IN a/DT car/NN !/. Sam/NNP !/. Let/VB me/PRP be/VB !/.&quot;        
+ [82] NA                                                                        
+ [83] &quot;I/PRP would/MD not/RB ,/, could/MD not/RB ,/, in/IN a/DT box/NN ./.&quot;     
+ [84] &quot;I/PRP could/MD not/RB ,/, would/MD not/RB ,/, with/IN a/DT fox/NN ./.&quot;   
+ [85] &quot;I/PRP will/MD not/RB eat/VB them/PRP with/IN a/DT mouse/NN ./.&quot;          
+ [86] &quot;I/PRP will/MD not/RB eat/VB them/PRP in/IN a/DT house/NN ./.&quot;            
+ [87] &quot;I/PRP will/MD not/RB eat/VB them/PRP here/RB or/CC there/RB ./.&quot;         
+ [88] &quot;I/PRP will/MD not/RB eat/VB them/PRP anywhere/RB ./.&quot;                    
+ [89] &quot;I/PRP do/VBP not/RB like/VB green/JJ eggs/NNS and/CC spam/NN ./.&quot;        
+ [90] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/, Sam-I-am/NNP ./.&quot;               
+ [91] NA                                                                        
+ [92] &quot;Say/VB !/. In/IN the/DT dark/NN ?/.&quot;                                     
+ [93] &quot;Here/RB in/IN the/DT dark/NN !/.&quot;                                        
+ [94] &quot;Would/MD you/PRP ,/, could/MD you/PRP ,/,&quot;                               
+ [95] &quot;in/IN the/DT dark/NN ?/.&quot;                                                
+ [96] NA                                                                        
+ [97] &quot;I/PRP would/MD not/RB ,/, could/MD not/RB ,/, in/IN the/DT dark/NN ./.&quot;  
+ [98] NA                                                                        
+ [99] &quot;Would/MD you/PRP ,/, could/MD you/PRP ,/, in/IN the/DT rain/NN ?/.&quot;      
+[100] NA                                                                        
+[101] &quot;I/PRP would/MD not/RB ,/, could/MD not/RB ,/, in/IN the/DT rain/NN ./.&quot;  
+[102] &quot;Not/RB in/IN the/DT dark/JJ ./. Not/RB on/IN a/DT train/NN ./.&quot;          
+[103] &quot;Not/RB in/IN a/DT car/NN ./. Not/RB in/IN a/DT tree/NN ./.&quot;              
+[104] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/, Sam/NNP ,/, you/PRP see/VBP ./.&quot;
+[105] &quot;Not/RB in/IN a/DT house/NN ./. Not/RB in/IN a/DT box/NN ./.&quot;             
+[106] &quot;Not/RB with/IN a/DT mouse/NN ./. Not/RB with/IN a/DT fox/NN ./.&quot;         
+[107] &quot;I/PRP will/MD not/RB eat/VB them/PRP here/RB or/CC there/RB ./.&quot;         
+[108] &quot;I/PRP do/VBP not/RB like/VB them/PRP anywhere/RB !/.&quot;                    
+[109] NA                                                                        
+[110] &quot;You/PRP do/VBP not/RB like/VB&quot;                                           
+[111] &quot;green/JJ eggs/NNS and/CC ham/NN ?/.&quot;                                     
+[112] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/,&quot;                                
+[113] &quot;Sam-I-am/NNP ./.&quot;                                                        
+[114] NA                                                                        
+[115] &quot;Could/MD you/PRP ,/, would/MD you/PRP ,/,&quot;                               
+[116] &quot;with/IN a/DT goat/NN ?/.&quot;                                                
+[117] NA                                                                        
+[118] &quot;I/PRP would/MD not/RB ,/, could/MD not/RB ,/,&quot;                           
+[119] &quot;with/IN a/DT goat/NN !/.&quot;                                                
+[120] NA                                                                        
+[121] &quot;Would/MD you/PRP ,/, could/MD you/PRP ,/,&quot;                               
+[122] &quot;on/IN a/DT boat/NN ?/.&quot;                                                  
+[123] NA                                                                        
+[124] &quot;I/PRP could/MD not/RB ,/, would/MD not/RB ,/,&quot;                           
+[125] &quot;on/IN a/DT boat/NN ./.&quot;                                                  
+[126] &quot;I/PRP will/MD not/RB ,/, will/MD not/RB ,/,&quot;                             
+[127] &quot;with/IN a/DT goat/NN ./.&quot;                                                
+[128] NA                                                                        
+[129] &quot;I/PRP will/MD not/RB eat/VB them/PRP in/IN the/DT rain/NN ./.&quot;           
+[130] &quot;I/PRP will/MD not/RB eat/VB them/PRP on/IN a/DT train/NN ./.&quot;            
+[131] &quot;Not/RB in/IN the/DT dark/NN !/. Not/RB in/IN a/DT tree/NN !/.&quot;           
+[132] &quot;Not/RB in/IN a/DT car/NN !/. You/PRP let/VB me/PRP be/VB !/.&quot;            
+[133] &quot;I/PRP do/VBP not/RB like/VB them/PRP in/IN a/DT box/NN ./.&quot;              
+[134] &quot;I/PRP do/VBP not/RB like/VB them/PRP with/IN a/DT fox/NN ./.&quot;            
+[135] &quot;I/PRP will/MD not/RB eat/VB them/PRP in/IN a/DT house/NN ./.&quot;            
+[136] &quot;I/PRP do/VBP not/RB like/VB them/PRP with/IN a/DT mouse/NN ./.&quot;          
+[137] &quot;I/PRP do/VBP not/RB like/VB them/PRP here/RB or/CC there/RB ./.&quot;         
+[138] &quot;I/PRP do/VBP not/RB like/VB them/PRP anywhere/RB !/.&quot;                    
+[139] &quot;I/PRP do/VBP not/RB like/VB green/JJ eggs/NNS and/CC ham/NN !/.&quot;         
+[140] &quot;I/PRP do/VBP not/RB like/VB them/PRP ,/, Sam-I-am/NNP ./.&quot;               
+[141] NA                                                                        
+[142] NA                                                                        
+[143] &quot;You/PRP do/VBP not/RB like/VB them/PRP ./. So/IN you/PRP say/VBP ./.&quot;    
+[144] &quot;Try/VB them/PRP !/. Try/VB them/PRP !/. And/CC you/PRP may/MD ./.&quot;       
+[145] &quot;Try/VB them/PRP and/CC you/PRP may/MD ,/, I/PRP say/VBP ./.&quot;             
+[146] NA                                                                        
+[147] &quot;Sam/NNP !/. If/IN you/PRP will/MD let/VB me/PRP be/VB ,/,&quot;               
+[148] &quot;I/PRP will/MD try/VB them/PRP ./. You/PRP will/MD see/VB ./.&quot;            
+[149] NA                                                                        
+[150] &quot;Say/VB !/. I/PRP like/IN green/JJ eggs/NNS and/CC ham/NN !/.&quot;            
+[151] &quot;I/PRP do/VBP !/. I/PRP like/IN them/PRP ,/, Sam-I-am/NNP !/.&quot;            
+[152] &quot;And/CC I/PRP would/MD eat/VB them/PRP in/IN a/DT boat/NN ./.&quot;            
+[153] &quot;And/CC I/PRP would/MD eat/VB them/PRP with/IN a/DT goat/NN .../:&quot;        
+[154] NA                                                                        
+[155] &quot;And/CC I/PRP will/MD eat/VB them/PRP in/IN the/DT rain/NN ./.&quot;           
+[156] &quot;And/CC in/IN the/DT dark/NN ./. And/CC on/IN a/DT train/NN ./.&quot;          
+[157] &quot;And/CC in/IN a/DT car/NN ./. And/CC in/IN a/DT tree/NN ./.&quot;              
+[158] &quot;They/PRP are/VBP so/RB good/JJ ,/, so/RB good/JJ ,/, you/PRP see/VBP !/.&quot;
+[159] NA                                                                        
+[160] &quot;So/IN I/PRP will/MD eat/VB them/PRP in/IN a/DT box/NN ./.&quot;               
+[161] &quot;And/CC I/PRP will/MD eat/VB them/PRP with/IN a/DT fox/NN ./.&quot;            
+[162] &quot;And/CC I/PRP will/MD eat/VB them/PRP in/IN a/DT house/NN ./.&quot;            
+[163] &quot;And/CC I/PRP will/MD eat/VB them/PRP with/IN a/DT mouse/NN ./.&quot;          
+[164] &quot;And/CC I/PRP will/MD eat/VB them/PRP here/RB and/CC there/RB ./.&quot;        
+[165] &quot;Say/VB !/. I/PRP will/MD eat/VB them/PRP anywhere/RB !/.&quot;                
+[166] &quot;I/PRP do/VBP so/RB like/IN&quot;                                              
+[167] &quot;green/JJ eggs/NNS and/CC ham/NN !/.&quot;                                     
+[168] &quot;Thank/VB you/PRP !/.&quot;                                                    
+[169] &quot;Thank/VB you/PRP ,/, Sam-I-am/NNP !/.&quot;                                   
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>as_tags</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

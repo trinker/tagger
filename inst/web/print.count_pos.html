@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>print.count_pos. tagger 0.0.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">tagger 0.0.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Prints a count_pos Object</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>"print"(x, digits&nbsp;=&nbsp;1, weight&nbsp;=&nbsp;"percent", zero.replace&nbsp;=&nbsp;"0", pretty&nbsp;=&nbsp;getOption("tagger_pretty"), ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>The count_pos object.</dd>
+      <dt>digits</dt>
+      <dd>The number of digits displayed.</dd>
+      <dt>weight</dt>
+      <dd>The weight type.  Currently the following are available:
+<code>"proportion"</code>, <code>"percent"</code>.  See <code><a href='http://www.inside-r.org/packages/cran/termco/docs/weight'>weight</a></code> for
+additional information.</dd>
+      <dt>zero.replace</dt>
+      <dd>The value to replace zero count elements with; defaults
+to <code>"0"</code>.</dd>
+      <dt>pretty</dt>
+      <dd>logical.  If <code>TRUE</code> the counts print in a pretty fashion,
+combining count and weighted information into a single display.
+<code>pretty</code> printing can be permanantly removed with
+<code><a href='http://www.inside-r.org/packages/cran/termco/docs/as_count'>as_count</a></code>.</dd>
+      <dt>...</dt>
+      <dd>ignored</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Prints a count_pos object.</p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>print.count_pos</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,12 +1,16 @@
 Package: tagger
-Title: What the Package Does (one line)
-Version: 0.0.1
-Authors@R: c(person("Tyler", "Rinker", email = "tyler.rinker@gmail.com", role = c("aut", "cre")))
+Title: Part of Speech Tagging
+Version: 0.0.2
+Authors@R: c(person("Tyler", "Rinker", email =
+        "tyler.rinker@gmail.com", role = c("aut", "cre")))
 Maintainer: Tyler Rinker <tyler.rinker@gmail.com>
-Description: What the package does (one paragraph)
+Description: Wraps the 'NLP' and 'openNLP' packages for easier part of
+        speech tagging.
 Depends: R (>= 3.2.2)
 Suggests: testthat
-Date: 2015-09-28
+Imports: data.table, dplyr, methods, NLP, openNLP, parallel, stringi, termco,
+        tidyr, utils, qdapTools
+Date: 2015-10-03
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
