@@ -14,7 +14,7 @@ as_tuple(x, word.first = TRUE, ...)
 \item{\ldots}{ignored.}
 }
 \value{
-Returns a lst of lists of tuples vectors..
+Returns a list of lists of tuples vectors..
 }
 \description{
 A traditional \pkg{Python} tuple style of displaying words and tags in the

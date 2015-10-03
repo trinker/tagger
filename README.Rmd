@@ -61,7 +61,7 @@ You are welcome to:
 
 # Examples
 
-The following examples demonstrate some of the functionality of **termco**.
+The following examples demonstrate some of the functionality of **tagger**.
 
 ## Load the Tools/Data
 
@@ -87,7 +87,7 @@ Let's begin with a minimal example.
 tag_pos(mwe$talk)
 ```
 
-Note that the out put pretty pints but the underlying structure is simply a lst of named vectors, where the elements in the vectors are te tokens and the names are the part of speech tags.  We can use `c` on the object to see it's true structure.
+Note that the out put pretty pints but the underlying structure is simply a lst of named vectors, where the elements in the vectors are the tokens and the names are the part of speech tags.  We can use `c` on the object to see it's true structure.
 
 ```{r}
 tag_pos(mwe$talk) %>%
@@ -100,7 +100,7 @@ Let's try it on a larger example, the built in `presidential_debates_2012` data 
 tag_pos(presidential_debates_2012$dialogue)
 ```
 
-This output is built into **tagger** as the `presidential_debates_2012_pos` data set, wich we'll use form this point on in the demo.
+This output is built into **tagger** as the `presidential_debates_2012_pos` data set, which we'll use form this point on in the demo.
 
 ## Plotting
 
@@ -111,9 +111,9 @@ presidential_debates_2012_pos %>%
     plot()
 ```
 
-## Interpretting Tags
+## Interpreting Tags
 
-The tags used by **openNLP** are utilize Penn Treebank.  As such there are many tags, more than the few parts of speech we learned in grade school.  Remember the meaning behind tags may be difficult, therefore the `penn_tags` creates a left alligned data frame of the possible tags and their meaning. 
+The tags used by **openNLP** are utilize Penn Treebank.  As such there are many tags, more than the few parts of speech we learned in grade school.  Remember the meaning behind tags may be difficult, therefore the `penn_tags` creates a left aligned data frame of the possible tags and their meaning. 
 
 ```{r}
 penn_tags()
@@ -178,7 +178,7 @@ presidential_debates_2012_pos %>%
 
 ## As Word Tags
 
-The traditional way to display tags is to incorporate them into the sentence, placing them before their respective token, separated by a foward slash (e.g., *VB/talk*). This is the defualt printing style of `tag_pos` though not truly the structure of the output.  The user can coerce the underlying structure with the `as_word_tag` function, converting the named list of vectors into a list of part of speech incorporated, unnamed vectors.  Below I only print the first 6 elements of `as_word_tag`.
+The traditional way to display tags is to incorporate them into the sentence, placing them before their respective token, separated by a forward slash (e.g., *VB/talk*). This is the default printing style of `tag_pos` though not truly the structure of the output.  The user can coerce the underlying structure with the `as_word_tag` function, converting the named list of vectors into a list of part of speech incorporated, unnamed vectors.  Below I only print the first 6 elements of `as_word_tag`.
 
 ```{r}
 presidential_debates_2012_pos %>%
@@ -188,13 +188,13 @@ presidential_debates_2012_pos %>%
 
 ## As Tuples
 
-**Python** uses a tuple construction of parts of speech to display tags.  This can be a useful structure.  Essentially the structure is a lists of lists of two element vectors.  Each vector cotnains a word and a part of speech tag.  `as_tuple` uses the following **R** structuring:
+**Python** uses a tuple construction of parts of speech to display tags.  This can be a useful structure.  Essentially the structure is a lists of lists of two element vectors.  Each vector contains a word and a part of speech tag.  `as_tuple` uses the following **R** structuring:
 
 ```
 list(list(c("word", "tag"), c("word", "tag")), list(c("word", "tag")))
 ```
 
-but prints to the console in the **Python** way.  Using `print(as_tuple(x), truncate=Inf, file="out.txt")` allows the user to print to an extrernal file.
+but prints to the console in the **Python** way.  Using `print(as_tuple(x), truncate=Inf, file="out.txt")` allows the user to print to an external file.
 
 ```{r}
 tag_pos(mwe$talk) %>%

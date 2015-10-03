@@ -50,7 +50,7 @@ Table of Contents
     -   [Load the Tools/Data](#load-the-toolsdata)
     -   [Tagging](#tagging)
     -   [Plotting](#plotting)
-    -   [Interpretting Tags](#interpretting-tags)
+    -   [Interpreting Tags](#interpreting-tags)
     -   [Counts](#counts)
     -   [Select Tags](#select-tags)
     -   [As Word Tags](#as-word-tags)
@@ -84,7 +84,7 @@ Examples
 ========
 
 The following examples demonstrate some of the functionality of
-**termco**.
+**tagger**.
 
 Load the Tools/Data
 -------------------
@@ -112,7 +112,7 @@ Let's begin with a minimal example.
     ## [3] "This/DT is/VBZ the/DT tagger/NN package/NN ;/: like/IN it/PRP ?/."
 
 Note that the out put pretty pints but the underlying structure is
-simply a lst of named vectors, where the elements in the vectors are te
+simply a lst of named vectors, where the elements in the vectors are the
 tokens and the names are the part of speech tags. We can use `c` on the
 object to see it's true structure.
 
@@ -158,8 +158,8 @@ run, depending on the machine.
     ## 2912. Good/JJ night/NN ./.
 
 This output is built into **tagger** as the
-`presidential_debates_2012_pos` data set, wich we'll use form this point
-on in the demo.
+`presidential_debates_2012_pos` data set, which we'll use form this
+point on in the demo.
 
 Plotting
 --------
@@ -171,13 +171,13 @@ The user can generate a horizontal barplot of the used tags.
 
 ![](inst/figure/unnamed-chunk-7-1.png)
 
-Interpretting Tags
-------------------
+Interpreting Tags
+-----------------
 
 The tags used by **openNLP** are utilize Penn Treebank. As such there
 are many tags, more than the few parts of speech we learned in grade
 school. Remember the meaning behind tags may be difficult, therefore the
-`penn_tags` creates a left alligned data frame of the possible tags and
+`penn_tags` creates a left aligned data frame of the possible tags and
 their meaning.
 
     penn_tags()
@@ -357,7 +357,7 @@ As Word Tags
 
 The traditional way to display tags is to incorporate them into the
 sentence, placing them before their respective token, separated by a
-foward slash (e.g., *VB/talk*). This is the defualt printing style of
+forward slash (e.g., *VB/talk*). This is the default printing style of
 `tag_pos` though not truly the structure of the output. The user can
 coerce the underlying structure with the `as_word_tag` function,
 converting the named list of vectors into a list of part of speech
@@ -380,14 +380,14 @@ As Tuples
 
 **Python** uses a tuple construction of parts of speech to display tags.
 This can be a useful structure. Essentially the structure is a lists of
-lists of two element vectors. Each vector cotnains a word and a part of
+lists of two element vectors. Each vector contains a word and a part of
 speech tag. `as_tuple` uses the following **R** structuring:
 
     list(list(c("word", "tag"), c("word", "tag")), list(c("word", "tag")))
 
 but prints to the console in the **Python** way. Using
 `print(as_tuple(x), truncate=Inf, file="out.txt")` allows the user to
-print to an extrernal file.
+print to an external file.
 
     tag_pos(mwe$talk) %>%
         as_tuple() %>%

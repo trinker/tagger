@@ -6,7 +6,7 @@
 #' @param x A \code{tag_pos} object or a named list of vectors.
 #' @param word.first logical.  If \code{TRUE} the word comes before the tag.
 #' @param \ldots ignored.
-#' @return Returns a lst of lists of tuples vectors..
+#' @return Returns a list of lists of tuples vectors..
 #' @export
 #' @note In order to generate a Python equivalent output use:\cr
 #' \code{print(as_tuple(x), truncate=Inf, file="out.txt")}

@@ -92,7 +92,7 @@ count_tags <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 #' to \code{"0"}.
 #' @param pretty logical.  If \code{TRUE} the counts print in a pretty fashion,
 #' combining count and weighted information into a single display.
-#' \code{pretty} printing can be permanantly removed with
+#' \code{pretty} printing can be permanently removed with
 #' \code{\link[termco]{as_count}}.
 #' @param \ldots ignored
 #' @method print count_tags
