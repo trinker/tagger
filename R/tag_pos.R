@@ -95,7 +95,7 @@ print.tag_pos <- function(x, n = 10, width = .7 * getOption("width"), ...){
         cat(paste(numbs[1:n], top, sep=" ", collapse="\n"))
         cat("\n.\n.\n.\n")
 
-        cat(paste(numbs[tails], bot, sep=" ", collapse="\n"))
+        cat(paste(numbs[tails], bot, sep=" ", collapse="\n"), "\n")
         #cat(sprintf("\n%s\nn = %s", paste(rep("-", 45), collapse=""), length(y)))
     }
 }
