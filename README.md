@@ -53,9 +53,11 @@ Table of Contents
     -   [Interpreting Tags](#interpreting-tags)
     -   [Counts](#counts)
     -   [Select Tags](#select-tags)
-    -   [As Word Tags](#as-word-tags)
-    -   [As Tuples](#as-tuples)
-    -   [As Universal Tags](#as-universal-tags)
+    -   [Altering Tag Display](#altering-tag-display)
+        -   [As Word Tags](#as-word-tags)
+        -   [As Tuples](#as-tuples)
+        -   [As Universal Tags](#as-universal-tags)
+        -   [As Basic Tags](#as-basic-tags)
 
 Installation
 ============
@@ -90,7 +92,7 @@ The following examples demonstrate some of the functionality of
 Load the Tools/Data
 -------------------
 
-    library(dplyr)
+    library(dplyr); library(tagger)
     data(presidential_debates_2012)
     mwe <- data_frame(
         person = c("Tyler", "Norah", "Tyler"),
@@ -353,8 +355,10 @@ Note that the output is a `tag_pos` class and the plotting,
     ## ..      ...       ...      ...   ...       ...      ...   ...      ...
     ## Variables not shown: VBN (chr), VBP (chr), VBZ (chr)
 
-As Word Tags
-------------
+Altering Tag Display
+--------------------
+
+### As Word Tags
 
 The traditional way to display tags is to incorporate them into the
 sentence, placing them before their respective token, separated by a
@@ -376,8 +380,7 @@ of `as_word_tag`.
     ## [5] "And/CC what/WP about/IN the/DT vouchers/NNS ?/."                                                                                           
     ## [6] "So/IN that/DT 's/VBZ that/DT 's/VBZ number/NN one/CD ./."
 
-As Tuples
----------
+### As Tuples
 
 **Python** uses a tuple construction of parts of speech to display tags.
 This can be a useful structure. Essentially the structure is a lists of
@@ -396,13 +399,12 @@ print to an external file.
 
     ## [[("I", "PRP"), ("need", "VBP"), ("$", "$"), ("54", "CD"), ("to", "TO"), ("go", "VB"), ("to", "TO"), ("the", "DT"), ("movies", "NNS"), (".", ".")], [("They", "PRP"), ("refuse", "VBP"), ("to", "TO"), ("permit", "VB"), ("us", "PRP"), ("to", "TO"), ("obtain", "VB"), ("the", "DT"), ("refuse", "NN"), ("permit", "NN")], [("This", "DT"), ("is", "VBZ"), ("the", "DT"), ("tagger", "NN"), ("package", "NN"), (";", ":"), ("like", "IN"), ("it", "PRP"), ("?", ".")]]
 
-As Universal Tags
------------------
+### As Universal Tags
 
 [Petrov, Das, & McDonald
-(2011)](https://github.com/slavpetrov/universal-pos-tags) provide
+(2011)](https://github.com/slavpetrov/universal-pos-tags) provide a
 mapping to convert Penn Treebank tags into universal part of speech
-tags.
+tags. The `as_universal` function harnesses this mapping.
 
     tag_pos(mwe$talk) %>%
         as_universal()
@@ -431,3 +433,43 @@ The out put is a `tag_pos` object and thus has a generic plot method.
     ## 1 2(20.0%)
     ## 2 3(30.0%)
     ## 3 1(11.1%)
+
+### As Basic Tags
+
+`as_basic` provides an even more coarse tagset than `as_universal`.
+Basic tags include: (a) `nouns`, (b) `adjectives`, (c) `prepositons`,
+(d) `articles`, (e) `verb`, (f) `pronoun`s, (g) `adverbs`, (h)
+`interjections`, & (i) `conjuctions`. The `X` and `.` tags are retained
+for punctuation and unclassified parts of speech. This tagset can be
+useful for more coarse purposes, including formality (Heylighen &
+Dewaele, 2002) scoring.
+
+-   Heylighen, F., & Dewaele, J.M. (2002). Variation in the
+    contextuality of language: An empirical measure. Context in Context,
+    Special issue of Foundations of Science, 7 (3), 293-340.
+
+<!-- -->
+
+    tag_pos(mwe$talk) %>%
+        as_basic()
+
+    ## [1] "I/pronoun need/verb $/. 54/adjective to/preposition go/verb to/preposition the/adjective movies/noun ./."                       
+    ## [2] "They/pronoun refuse/verb to/preposition permit/verb us/pronoun to/preposition obtain/verb the/adjective refuse/noun permit/noun"
+    ## [3] "This/adjective is/verb the/adjective tagger/noun package/noun ;/. like/preposition it/pronoun ?/."
+
+The out put is a `tag_pos` object and thus has a generic plot method.
+
+    tag_pos(mwe$talk) %>%
+        as_basic() %>%
+        plot()
+
+![](inst/figure/unnamed-chunk-22-1.png)
+
+    tag_pos(mwe$talk) %>%
+        as_basic() %>%
+        count_tags()
+
+    ##   n.tokens        . adjective     noun preposition  pronoun     verb
+    ## 1       10 2(20.0%)  2(20.0%) 1(10.0%)    2(20.0%) 1(10.0%) 2(20.0%)
+    ## 2       10        0  1(10.0%) 2(20.0%)    2(20.0%) 2(20.0%) 3(30.0%)
+    ## 3        9 2(22.2%)  2(22.2%) 2(22.2%)    1(11.1%) 1(11.1%) 1(11.1%)

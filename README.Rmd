@@ -6,7 +6,7 @@ output:
     toc: true      
 ---
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
 desc <- suppressWarnings(readLines("DESCRIPTION"))
 regex <- "(^Version:\\s+)(\\d+\\.\\d+\\.\\d+)"
@@ -66,7 +66,7 @@ The following examples demonstrate some of the functionality of **tagger**.
 ## Load the Tools/Data
 
 ```{r}
-library(dplyr)
+library(dplyr); library(tagger)
 data(presidential_debates_2012)
 mwe <- data_frame(
     person = c("Tyler", "Norah", "Tyler"),
@@ -176,7 +176,9 @@ presidential_debates_2012_pos %>%
     count_tags()
 ```
 
-## As Word Tags
+## Altering Tag Display
+
+### As Word Tags
 
 The traditional way to display tags is to incorporate them into the sentence, placing them before their respective token, separated by a forward slash (e.g., *VB/talk*). This is the default printing style of `tag_pos` though not truly the structure of the output.  The user can coerce the underlying structure with the `as_word_tag` function, converting the named list of vectors into a list of part of speech incorporated, unnamed vectors.  Below I only print the first 6 elements of `as_word_tag`.
 
@@ -186,7 +188,7 @@ presidential_debates_2012_pos %>%
     head()
 ````
 
-## As Tuples
+### As Tuples
 
 **Python** uses a tuple construction of parts of speech to display tags.  This can be a useful structure.  Essentially the structure is a lists of lists of two element vectors.  Each vector contains a word and a part of speech tag.  `as_tuple` uses the following **R** structuring:
 
@@ -203,9 +205,9 @@ tag_pos(mwe$talk) %>%
 ```
 
 
-## As Universal Tags 
+### As Universal Tags 
 
-[Petrov, Das, & McDonald (2011)](https://github.com/slavpetrov/universal-pos-tags) provide mapping to convert Penn Treebank tags into universal part of speech tags. 
+[Petrov, Das, & McDonald (2011)](https://github.com/slavpetrov/universal-pos-tags) provide a mapping to convert Penn Treebank tags into universal part of speech tags.   The `as_universal` function harnesses this mapping.
 
 ```{r}
 tag_pos(mwe$talk) %>%
@@ -226,3 +228,28 @@ tag_pos(mwe$talk) %>%
     count_tags()
 ```
 
+### As Basic Tags 
+
+`as_basic` provides an even more coarse tagset than `as_universal`.  Basic tags include: (a) `nouns`, (b) `adjectives`, (c) `prepositons`, (d) `articles`, (e) `verb`, (f) `pronoun`s, (g) `adverbs`, (h) `interjections`, & (i) `conjuctions`.  The `X` and `.` tags are retained for punctuation and unclassified parts of speech.  This tagset can be useful for more coarse purposes, including formality (Heylighen & Dewaele, 2002) scoring.
+
+- Heylighen, F., & Dewaele, J.M. (2002). Variation in the contextuality of language: An empirical measure. Context in Context, Special issue of Foundations of Science, 7 (3), 293-340.
+
+
+```{r}
+tag_pos(mwe$talk) %>%
+    as_basic()
+```
+
+The out put is a `tag_pos` object and thus has a generic plot method.
+
+```{r}
+tag_pos(mwe$talk) %>%
+    as_basic() %>%
+    plot()
+```
+
+```{r}
+tag_pos(mwe$talk) %>%
+    as_basic() %>%
+    count_tags()
+```
