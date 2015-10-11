@@ -13,7 +13,7 @@ as_universal(x, tagset = "en-ptb", dictionary = tagger::universal_pos_map,
 \item{tagset}{The name of a tagset dictionary to use as a key.  Use
 \code{names(universal_pos_map)} to see possible choices.}
 
-\item{dictionary}{A dataframe that maps the vurrent tagset to a second tagset.}
+\item{dictionary}{A dataframe that maps the current tagset to a second tagset.}
 
 \item{\ldots}{ignored.}
 }

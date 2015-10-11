@@ -18,10 +18,15 @@
 #' @examples
 #' data(presidential_debates_2012_pos) # pre tagged data
 #' count_tags(presidential_debates_2012_pos)
-#' count_tags(presidential_debates_2012_pos, by = presidential_debates_2012$person)
+#' count_tags(presidential_debates_2012_pos, grouping.var = presidential_debates_2012$person)
 #' with(presidential_debates_2012,
-#'     count_tags(presidential_debates_2012_pos, by = list(person, time))
+#'     count_tags(presidential_debates_2012_pos, grouping.var = list(person, time))
 #' )
+#'
+#' library(dplyr)
+#' with(presidential_debates_2012,
+#'     count_tags(presidential_debates_2012_pos, grouping.var = list(person, time))
+#' ) %>% plot()
 count_tags <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 
     n.tokens <- NULL
@@ -75,6 +80,7 @@ count_tags <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
     attributes(out)[["pos.vars"]] <- nms
     attributes(out)[["weight"]] <- "count"
     attributes(out)[["pretty"]] <- pretty
+    attributes(out)[["term.vars"]] <- colnames(out)[!colnames(out) %in% c(G, "n.tokens")]
     return(out)
 }
 
@@ -151,4 +157,69 @@ print.count_tags <- function (x, digits = 1, weight = "percent", zero.replace = 
         })
     }
 }
+
+
+
+#' Plots a count_tags object
+#'
+#' Plots a count_tags object.
+#'
+#' @param x The count_tags object.
+#' @param labels logical.  If \code{TRUE} the cell count values will be included
+#' on the heatmap.
+#' @param low The color to be used for lower values.
+#' @param high The color to be used for higher values.
+#' @param grid The color of the grid (Use \code{NA} to remove the grid).
+#' @param label.color The color to make labels if \code{labels = TRUE}.
+#' @param label.size The size to make labels if \code{labels = TRUE}.
+#' @param weight The weight to apply to the cell values for gradient fill.
+#' Currently the following are available:
+#' \code{"proportion"}, \code{"percent"}.  See \code{\link[termco]{weight}} for
+#' additional information.
+#' @param \ldots ignored
+#' @method plot count_tags
+#' @export
+plot.count_tags <- function(x, labels = FALSE, low ="white",
+    high = "red", grid = NA, label.color = "grey70", label.size = 3,
+    weight = "proportion", ...){
+
+    group <- attributes(x)[["group.vars"]]
+    y <- weight(x, weight = weight)
+    if (is.null(group)) {
+        suppressWarnings(y[, 'group.vars' := rep("all", nrow(y))])
+        group <- 'all'
+    }
+    y <- rm_class(y, "data.table")
+    y[["group.vars"]] <- paste2(y[, group], sep = "_")
+    y <- y[!colnames(y) %in% group]
+    vars <- colnames(y)[!colnames(y) %in% c("group.vars", "n.tokens")]
+    dat <- tidyr::gather_(y, "terms", "values", vars)
+
+    out <- ggplot2::ggplot(dat, ggplot2::aes_string(y = 'group.vars', x = "terms",
+        fill = "values")) +
+        ggplot2::theme_bw() +
+        ggplot2::theme(
+            axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = 1),
+            panel.grid.minor = ggplot2::element_blank(),
+            panel.grid.major = ggplot2::element_blank(),
+            panel.border = ggplot2::element_rect(colour = "grey80"),
+            legend.key.width = grid::unit(.25, 'cm'),
+            legend.key.height = grid::unit(1, 'cm')
+        ) +
+        ggplot2::xlab("Part of Speech") +
+        ggplot2::ylab("Groups") +
+        ggplot2::geom_tile(color = grid) +
+        ggplot2::scale_fill_gradient(high = high, low = low, name = "Percent",
+            labels = scales::percent)
+
+    if (isTRUE(labels)){
+        values <- n.tokens <- NULL
+        out <- out +
+            ggplot2::geom_text(ggplot2::aes(label = round(n.tokens * values, 0)),
+                color = label.color, size = label.size)
+    }
+
+    out
+}
+
 

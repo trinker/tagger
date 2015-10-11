@@ -30,10 +30,15 @@ Tabulate counts of part of speech tags by grouping variable(s).
 \examples{
 data(presidential_debates_2012_pos) # pre tagged data
 count_tags(presidential_debates_2012_pos)
-count_tags(presidential_debates_2012_pos, by = presidential_debates_2012$person)
+count_tags(presidential_debates_2012_pos, grouping.var = presidential_debates_2012$person)
 with(presidential_debates_2012,
-    count_tags(presidential_debates_2012_pos, by = list(person, time))
+    count_tags(presidential_debates_2012_pos, grouping.var = list(person, time))
 )
+
+library(dplyr)
+with(presidential_debates_2012,
+    count_tags(presidential_debates_2012_pos, grouping.var = list(person, time))
+) \%>\% plot()
 }
 \keyword{count}
 \keyword{proportion}

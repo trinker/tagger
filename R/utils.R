@@ -24,8 +24,18 @@ tagPOS <-  function(text.var, PTA, WTA, ...) {
 
 }
 
+weight <- function(x, weight = "percent", ...){
 
-rm_class <- function(x, remove = "term_count", ...){
+    switch(weight,
+        percent = propify(x, perc),
+        proportion = propify(x, prop),
+        stop("Select an appropriate weighting method")
+    )
+}
+
+
+
+rm_class <- function(x, remove = "count_tags", ...){
     class(x) <- class(x)[!class(x) %in% remove]
     x
 }
@@ -44,11 +54,11 @@ propify <- function(x, fun, ...){
         attributes(x)[["counts"]] <- counts
     }
 
-    fun2 <- function(y) fun(y, x[["n.words"]])
-
-    dat <- dplyr::select_(x, .dots = termcols)
-    x[termcols] <- dplyr::mutate_each_(dat, dplyr::funs(fun2), termcols)
-    class(x)[class(x) %in% "term_count"] <- "term_count_weighted"
+    fun2 <- function(y) fun(y, x[["n.tokens"]])
+    x <- as.data.frame(x, stringsAsFactors = FALSE)
+    dat <-x[, termcols]
+    x[termcols] <- apply(dat, 2, fun2)
+    class(x) <- c("tag_count_weighted", "data.table", "data.frame")
     attributes(x)[["weight"]] <- "proportion"
     x
 }

@@ -437,9 +437,9 @@ The out put is a `tag_pos` object and thus has a generic plot method.
 ### As Basic Tags
 
 `as_basic` provides an even more coarse tagset than `as_universal`.
-Basic tags include: (a) `nouns`, (b) `adjectives`, (c) `prepositons`,
+Basic tags include: (a) `nouns`, (b) `adjectives`, (c) `prepositions`,
 (d) `articles`, (e) `verb`, (f) `pronoun`s, (g) `adverbs`, (h)
-`interjections`, & (i) `conjuctions`. The `X` and `.` tags are retained
+`interjections`, & (i) `conjunctions`. The `X` and `.` tags are retained
 for punctuation and unclassified parts of speech. This tagset can be
 useful for more coarse purposes, including formality (Heylighen &
 Dewaele, 2002) scoring.

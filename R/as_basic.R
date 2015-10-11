@@ -2,9 +2,9 @@
 #'
 #' Convert the Penn Treebank tags to basic part of speech tags.
 #'
-#' @details Basic tags include: (a) nouns, (b) adjectives, (c) prepositons,
+#' @details Basic tags include: (a) nouns, (b) adjectives, (c) prepositions,
 #' (d) articles, (e) verbs, (f) pronouns, (g) adverbs, (h) interjections, and
-#' (i) conjuctions.  The \code{X} and \code{.} tags are retained for punctuation
+#' (i) conjunctions.  The \code{X} and \code{.} tags are retained for punctuation
 #' and unclassified parts of speech.  This tagset can be useful for more coarse
 #' purposes, including formality (Heylighen & Dewaele, 2002) scoring.
 #'
