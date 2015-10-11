@@ -33,6 +33,12 @@ as_basic(out1)
 
 presidential_debates_2012_pos
 as_basic(presidential_debates_2012_pos)
+
+library(dplyr)
+presidential_debates_2012_pos \%>\%
+    as_basic() \%>\%
+    count_tags(grouping.var=presidential_debates_2012[["person"]]) \%>\%
+    plot()
 }
 \references{
 Heylighen, F., & Dewaele, J.M. (2002). Variation in the

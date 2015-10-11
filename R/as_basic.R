@@ -26,6 +26,12 @@
 #'
 #' presidential_debates_2012_pos
 #' as_basic(presidential_debates_2012_pos)
+#'
+#' library(dplyr)
+#' presidential_debates_2012_pos %>%
+#'     as_basic() %>%
+#'     count_tags(grouping.var=presidential_debates_2012[["person"]]) %>%
+#'     plot()
 as_basic <- function(x, ...) {
 
     out <- lapply(x, function(y){

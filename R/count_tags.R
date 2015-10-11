@@ -185,12 +185,14 @@ plot.count_tags <- function(x, labels = FALSE, low ="white",
 
     group <- attributes(x)[["group.vars"]]
     y <- weight(x, weight = weight)
+
+    y <- as.data.frame(rm_class(y, "data.table"), stringsAsFactors = FALSE)
     if (is.null(group)) {
         suppressWarnings(y[, 'group.vars' := rep("all", nrow(y))])
-        group <- 'all'
+    } else {
+        y[["group.vars"]] <- paste2(y[, group, drop=FALSE], sep = "_")
     }
-    y <- rm_class(y, "data.table")
-    y[["group.vars"]] <- paste2(y[, group], sep = "_")
+
     y <- y[!colnames(y) %in% group]
     vars <- colnames(y)[!colnames(y) %in% c("group.vars", "n.tokens")]
     dat <- tidyr::gather_(y, "terms", "values", vars)
@@ -221,5 +223,6 @@ plot.count_tags <- function(x, labels = FALSE, low ="white",
 
     out
 }
+
 
 
