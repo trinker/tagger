@@ -55,6 +55,7 @@ Table of Contents
     -   [Select Tags](#select-tags)
     -   [As Word Tags](#as-word-tags)
     -   [As Tuples](#as-tuples)
+    -   [As Universal Tags](#as-universal-tags)
 
 Installation
 ============
@@ -394,3 +395,39 @@ print to an external file.
         print(truncate=Inf)
 
     ## [[("I", "PRP"), ("need", "VBP"), ("$", "$"), ("54", "CD"), ("to", "TO"), ("go", "VB"), ("to", "TO"), ("the", "DT"), ("movies", "NNS"), (".", ".")], [("They", "PRP"), ("refuse", "VBP"), ("to", "TO"), ("permit", "VB"), ("us", "PRP"), ("to", "TO"), ("obtain", "VB"), ("the", "DT"), ("refuse", "NN"), ("permit", "NN")], [("This", "DT"), ("is", "VBZ"), ("the", "DT"), ("tagger", "NN"), ("package", "NN"), (";", ":"), ("like", "IN"), ("it", "PRP"), ("?", ".")]]
+
+As Universal Tags
+-----------------
+
+[Petrov, Das, & McDonald
+(2011)](https://github.com/slavpetrov/universal-pos-tags) provide
+mapping to convert Penn Treebank tags into universal part of speech
+tags.
+
+    tag_pos(mwe$talk) %>%
+        as_universal()
+
+    ## [1] "I/PRON need/VERB $/. 54/NUM to/PRT go/VERB to/PRT the/DET movies/NOUN ./."                          
+    ## [2] "They/PRON refuse/VERB to/PRT permit/VERB us/PRON to/PRT obtain/VERB the/DET refuse/NOUN permit/NOUN"
+    ## [3] "This/DET is/VERB the/DET tagger/NOUN package/NOUN ;/. like/ADP it/PRON ?/."
+
+The out put is a `tag_pos` object and thus has a generic plot method.
+
+    tag_pos(mwe$talk) %>%
+        as_universal() %>%
+        plot()
+
+![](inst/figure/unnamed-chunk-19-1.png)
+
+    tag_pos(mwe$talk) %>%
+        as_universal() %>%
+        count_tags()
+
+    ##   n.tokens        .      ADP      DET     NOUN      NUM     PRON      PRT
+    ## 1       10 2(20.0%)        0 1(10.0%) 1(10.0%) 1(10.0%) 1(10.0%) 2(20.0%)
+    ## 2       10        0        0 1(10.0%) 2(20.0%)        0 2(20.0%) 2(20.0%)
+    ## 3        9 2(22.2%) 1(11.1%) 2(22.2%) 2(22.2%)        0 1(11.1%)        0
+    ##       VERB
+    ## 1 2(20.0%)
+    ## 2 3(30.0%)
+    ## 3 1(11.1%)

@@ -201,3 +201,28 @@ tag_pos(mwe$talk) %>%
     as_tuple() %>%
     print(truncate=Inf)
 ```
+
+
+## As Universal Tags 
+
+[Petrov, Das, & McDonald (2011)](https://github.com/slavpetrov/universal-pos-tags) provide mapping to convert Penn Treebank tags into universal part of speech tags. 
+
+```{r}
+tag_pos(mwe$talk) %>%
+    as_universal()
+```
+
+The out put is a `tag_pos` object and thus has a generic plot method.
+
+```{r}
+tag_pos(mwe$talk) %>%
+    as_universal() %>%
+    plot()
+```
+
+```{r}
+tag_pos(mwe$talk) %>%
+    as_universal() %>%
+    count_tags()
+```
+
