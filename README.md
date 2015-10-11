@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/tagger.svg?branch=master)](https://travis-
 Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](https://coveralls.io/r/trinker/tagger?branch=master)
 <a href="https://img.shields.io/badge/Version-0.0.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.2-orange.svg" alt="Version"/></a>
 </p>
-<img src="inst/termco_logo/r_tagger.png" width="200" alt="tagger Logo">
+<img src="inst/tagger_logo/r_tagger.png" width="200" alt="tagger Logo">
 
 **tagger** wraps the **NLP** and **openNLP** packages for easier part of
 speech tagging. **tagger** uses the **openNLP** annotator to compute
