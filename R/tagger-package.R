@@ -53,3 +53,25 @@ NULL
 #' @usage data(presidential_debates_2012_pos)
 #' @format A list with 2912 elements
 NULL
+
+#' Mapping to Universal Tags
+#'
+#' A dataset containing a list \code{\link[base]{data.frame}} maps to move from
+#' Penn Treebank tagsets to a set of 12 universal part of speech tags.  This
+#' mapping comes from Petrov, Das, & McDonald (2011).
+#'
+#' @details Each \code{\link[base]{data.frame}} contains a tag column,
+#' corresponding to the Penn Treebank tagset, and a universal column,
+#' corresponding to the 12 universal tags.
+#'
+#'
+#' @docType data
+#' @keywords datasets
+#' @name universal_pos_map
+#' @usage data(universal_pos_map)
+#' @format A list with 33 elements
+#' @references \url{https://github.com/slavpetrov/universal-pos-tags}
+#'
+#' Slav Petrov, Dipanjan Das and Ryan McDonald. (2011). A Universal Part-of-Speech Tagset. http://arxiv.org/abs/1104.2086
+NULL
+
