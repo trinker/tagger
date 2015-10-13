@@ -35,9 +35,12 @@
 as_basic <- function(x, ...) {
 
     out <- lapply(x, function(y){
+        names(y)[stringi::stri_detect_regex(y, "^(the|a(n?))$",
+            opts_regex=stringi::stri_opts_regex(case_insensitive=TRUE))] <- "article"
         names(y) <- .basic[match(names(y), .basic[["tag"]]), "basic"]
         y
     })
+
     class(out) <- c("tag_pos", class(out))
     out
 }
@@ -50,7 +53,7 @@ as_basic <- function(x, ...) {
     "NP", "PDT", "POS", "PRP", "PRP$", "PRP|VBP", "PRT", "RB", "RBR",
     "RBS", "RB|RP", "RB|VBG", "RN", "RP", "SYM", "TO", "UH", "VB",
     "VBD", "VBD|VBN", "VBG", "VBG|NN", "VBN", "VBP", "VBP|TO", "VBZ",
-    "VP", "WDT", "WH", "WP", "WP$", "WRB", "``"), basic = c(".",
+    "VP", "WDT", "WH", "WP", "WP$", "WRB", "``", "article"), basic = c(".",
     ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "conjunction",
     "adjective", "X", "adjective", "noun", "X", "preposition", "preposition",
     "adjective", "adjective", "adjective", "adjective", "adjective",
@@ -60,6 +63,6 @@ as_basic <- function(x, ...) {
     "adverb", "X", "preposition", "X", "preposition", "interjection",
     "verb", "verb", "verb", "verb", "verb", "verb", "verb", "verb",
     "verb", "verb", "pronoun", "X", "pronoun", "pronoun", "adverb",
-    ".")), .Names = c("tag", "basic"), row.names = c(NA, -68L), class = "data.frame")
+    ".", "article")), .Names = c("tag", "basic"), row.names = c(NA, -69L), class = "data.frame")
 
 
