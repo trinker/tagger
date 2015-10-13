@@ -35,8 +35,7 @@
 as_basic <- function(x, ...) {
 
     out <- lapply(x, function(y){
-        names(y)[stringi::stri_detect_regex(y, "^(the|a(n?))$",
-            opts_regex=stringi::stri_opts_regex(case_insensitive=TRUE))] <- "article"
+        names(y)[tolower(y) %in% c("the", "an", "a")] <- "article"
         names(y) <- .basic[match(names(y), .basic[["tag"]]), "basic"]
         y
     })
