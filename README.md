@@ -74,7 +74,10 @@ run `R CMD INSTALL` on it, or use the **pacman** package to install the
 development version:
 
     if (!require("pacman")) install.packages("pacman")
-    pacman::p_load_gh("trinker/tagger")
+    pacman::p_load_gh(c(
+        "trinker/termco", 
+        "trinker/tagger"
+    ))
 
 Contact
 =======
@@ -95,6 +98,30 @@ Load the Tools/Data
 -------------------
 
     library(dplyr); library(tagger)
+
+    ## 
+    ## Attaching package: 'dplyr'
+    ## 
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+    ## 
+    ## The following object is masked from 'package:qdap':
+    ## 
+    ##     %>%
+    ## 
+    ## The following object is masked from 'package:qdapTools':
+    ## 
+    ##     id
+    ## 
+    ## The following objects are masked from 'package:qdapRegex':
+    ## 
+    ##     escape, explain
+    ## 
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
     data(presidential_debates_2012)
     mwe <- data_frame(
         person = c("Tyler", "Norah", "Tyler"),
@@ -455,9 +482,9 @@ Dewaele, 2002) scoring.
     tag_pos(mwe$talk) %>%
         as_basic()
 
-    ## [1] "I/pronoun need/verb $/. 54/adjective to/preposition go/verb to/preposition the/adjective movies/noun ./."                       
-    ## [2] "They/pronoun refuse/verb to/preposition permit/verb us/pronoun to/preposition obtain/verb the/adjective refuse/noun permit/noun"
-    ## [3] "This/adjective is/verb the/adjective tagger/noun package/noun ;/. like/preposition it/pronoun ?/."
+    ## [1] "I/pronoun need/verb $/. 54/adjective to/preposition go/verb to/preposition the/article movies/noun ./."                       
+    ## [2] "They/pronoun refuse/verb to/preposition permit/verb us/pronoun to/preposition obtain/verb the/article refuse/noun permit/noun"
+    ## [3] "This/adjective is/verb the/article tagger/noun package/noun ;/. like/preposition it/pronoun ?/."
 
 The out put is a `tag_pos` object and thus has a generic plot method.
 
@@ -471,7 +498,11 @@ The out put is a `tag_pos` object and thus has a generic plot method.
         as_basic() %>%
         count_tags()
 
-    ##   n.tokens        . adjective     noun preposition  pronoun     verb
-    ## 1       10 2(20.0%)  2(20.0%) 1(10.0%)    2(20.0%) 1(10.0%) 2(20.0%)
-    ## 2       10        0  1(10.0%) 2(20.0%)    2(20.0%) 2(20.0%) 3(30.0%)
-    ## 3        9 2(22.2%)  2(22.2%) 2(22.2%)    1(11.1%) 1(11.1%) 1(11.1%)
+    ##   n.tokens        . adjective  article     noun preposition  pronoun
+    ## 1       10 2(20.0%)  1(10.0%) 1(10.0%) 1(10.0%)    2(20.0%) 1(10.0%)
+    ## 2       10        0         0 1(10.0%) 2(20.0%)    2(20.0%) 2(20.0%)
+    ## 3        9 2(22.2%)  1(11.1%) 1(11.1%) 2(22.2%)    1(11.1%) 1(11.1%)
+    ##       verb
+    ## 1 2(20.0%)
+    ## 2 3(30.0%)
+    ## 3 1(11.1%)

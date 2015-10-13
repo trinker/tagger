@@ -10,7 +10,7 @@ Depends: R (>= 3.2.2)
 Suggests: testthat
 Imports: data.table, dplyr, ggplot2, methods, NLP, openNLP, scales,
         stringi, termco, tidyr, utils, qdapTools
-Date: 2015-10-12
+Date: 2015-10-13
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)

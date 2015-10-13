@@ -50,7 +50,10 @@ Download the [zip ball](https://github.com/trinker/tagger/zipball/master) or [ta
 
 ```r
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_gh("trinker/tagger")
+pacman::p_load_gh(c(
+    "trinker/termco", 
+    "trinker/tagger"
+))
 ```
 
 # Contact
