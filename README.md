@@ -367,8 +367,8 @@ Altering Tag Display
 ### As Word Tags
 
 The traditional way to display tags is to incorporate them into the
-sentence, placing them before their respective token, separated by a
-forward slash (e.g., *VB/talk*). This is the default printing style of
+sentence, placing them after/before their respective token, separated by a
+forward slash (e.g., *talk/VB*). This is the default printing style of
 `tag_pos` though not truly the structure of the output. The user can
 coerce the underlying structure with the `as_word_tag` function,
 converting the named list of vectors into a list of part of speech
