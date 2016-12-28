@@ -1,4 +1,4 @@
-tagger
+tagger   [![Follow](https://img.shields.io/twitter/follow/tylerrinker.svg?style=social)](https://twitter.com/intent/follow?screen_name=tylerrinker)
 ============
 
 
@@ -82,11 +82,10 @@ development version:
 Contact
 =======
 
-You are welcome to: 
-* submit suggestions and bug-reports at: <https://github.com/trinker/tagger/issues> 
-* send a pull request on: <https://github.com/trinker/tagger/> 
-* compose a friendly e-mail to: <tyler.rinker@gmail.com>
-
+You are welcome to:    
+- submit suggestions and bug-reports at: <https://github.com/trinker/tagger/issues>    
+- send a pull request on: <https://github.com/trinker/tagger/>    
+- compose a friendly e-mail to: <tyler.rinker@gmail.com>    
 
 Examples
 ========
@@ -98,6 +97,29 @@ Load the Tools/Data
 -------------------
 
     library(dplyr); library(tagger)
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following object is masked from 'package:qdap':
+    ## 
+    ##     %>%
+
+    ## The following object is masked from 'package:qdapTools':
+    ## 
+    ##     id
+
+    ## The following objects are masked from 'package:qdapRegex':
+    ## 
+    ##     escape, explain
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
 
     data(presidential_debates_2012)
     mwe <- data_frame(
@@ -344,10 +366,9 @@ Note that the output is a `tag_pos` class and the plotting,
         select_tags("^(VB|NN)", regex=TRUE) %>%
         count_tags()
 
-    ## Source: local data frame [2,912 x 11]
-    ## 
+    ## # A tibble: 2,912 x 11
     ##    n.tokens        NN      NNP  NNPS       NNS       VB   VBD      VBG
-    ##       (dbl)     (chr)    (chr) (chr)     (chr)    (chr) (chr)    (chr)
+    ##       <dbl>     <chr>    <chr> <chr>     <chr>    <chr> <chr>    <chr>
     ## 1         4  3(75.0%)        0     0         0 1(25.0%)     0        0
     ## 2         5  2(40.0%) 1(20.0%)     0         0 1(20.0%)     0        0
     ## 3         6  1(16.7%) 1(16.7%)     0  2(33.3%)        0     0        0
@@ -358,8 +379,8 @@ Note that the output is a `tag_pos` class and the plotting,
     ## 8         1 1(100.0%)        0     0         0        0     0        0
     ## 9         6  1(16.7%)        0     0  1(16.7%) 3(50.0%)     0        0
     ## 10        5  2(40.0%)        0     0         0 2(40.0%)     0        0
-    ## ..      ...       ...      ...   ...       ...      ...   ...      ...
-    ## Variables not shown: VBN (chr), VBP (chr), VBZ (chr)
+    ## # ... with 2,902 more rows, and 3 more variables: VBN <chr>, VBP <chr>,
+    ## #   VBZ <chr>
 
 Altering Tag Display
 --------------------
@@ -367,8 +388,8 @@ Altering Tag Display
 ### As Word Tags
 
 The traditional way to display tags is to incorporate them into the
-sentence, placing them after/before their respective token, separated by a
-forward slash (e.g., *talk/VB*). This is the default printing style of
+sentence, placing them after/before their respective token, separated by
+a forward slash (e.g., *talk/VB*). This is the default printing style of
 `tag_pos` though not truly the structure of the output. The user can
 coerce the underlying structure with the `as_word_tag` function,
 converting the named list of vectors into a list of part of speech
@@ -454,7 +475,7 @@ Dewaele, 2002) scoring.
     contextuality of language: An empirical measure. Context in Context,
     Special issue of Foundations of Science, 7 (3), 293-340.
 
-<!-- -->
+
 
     tag_pos(mwe$talk) %>%
         as_basic()
