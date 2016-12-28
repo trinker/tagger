@@ -67,7 +67,7 @@ count_tags <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 
     } else {
 
-        out <- qdapTools::mtabulate(sapply(x, names))
+        out <- textshape::mtabulate(sapply(x, names))
         out <- data.table::setDT(data.frame(out, check.names=FALSE))
         out[, n.tokens := rowSums(out, TRUE)]
         data.table::setcolorder(out, c('n.tokens', utils::head(colnames(out), -1)))
