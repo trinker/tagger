@@ -59,7 +59,7 @@ count_tags <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
         group_dat <- stats::setNames(as.data.frame(grouping,
             stringsAsFactors = FALSE), G)
         if(nrow(group_dat) != length(x)) stop("The `x` must be equal in length to `grouping.var`")
-        out <- data.frame(group_dat, qdapTools::mtabulate(sapply(x, names)), check.names=FALSE)
+        out <- data.frame(group_dat, textshape::mtabulate(sapply(x, names)), check.names=FALSE)
         out <- data.table::setDT(out)[, lapply(.SD, sum, na.rm=TRUE), by=G]
         nms <- colnames(out)[!colnames(out) %in% G]
         out[, n.tokens := rowSums(out[, nms, with=FALSE], TRUE)]

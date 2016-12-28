@@ -5,12 +5,26 @@ Authors@R: c(person("Tyler", "Rinker", email =
         "tyler.rinker@gmail.com", role = c("aut", "cre")))
 Maintainer: Tyler Rinker <tyler.rinker@gmail.com>
 Description: Wraps the 'NLP' and 'openNLP' packages for easier part of
-        speech tagging.
-Depends: R (>= 3.2.2)
-Suggests: testthat
-Imports: data.table, dplyr, ggplot2, methods, NLP, openNLP, scales,
-        stringi, termco, tidyr, utils, qdapTools
-Date: 2015-10-13
+    speech tagging.
+Depends:
+    R (>= 3.2.2)
+Suggests:
+    testthat
+Imports:
+    data.table,
+    dplyr,
+    ggplot2,
+    methods,
+    NLP,
+    openNLP,
+    scales,
+    stringi,
+    termco,
+    textshape,
+    tidyr,
+    utils
+Date: 2016-12-28
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
+RoxygenNote: 5.0.1
