@@ -35,6 +35,8 @@
 as_basic <- function(x, ...) {
 
     out <- lapply(x, function(y){
+
+        if (length(y) == 1 && is.na(y)) return(NA)
         names(y)[tolower(y) %in% c("the", "an", "a")] <- "article"
         names(y) <- .basic[match(names(y), .basic[["tag"]]), "basic"]
         y

@@ -42,6 +42,7 @@ as_universal <- function(x, tagset = "en-ptb",
 
     key <- dictionary[[tagset]]
     out <- lapply(x, function(y){
+        if (length(y) == 1 && is.na(y)) return(NA)
         names(y) <- key[match(names(y), key[["tag"]]), "universal"]
         y
     })

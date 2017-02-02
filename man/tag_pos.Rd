@@ -31,6 +31,8 @@ c(x) ## The true structure of a `tag_pos` object
 (out1 <- tag_pos(sam_i_am))
 as_word_tag(out1)
 count_tags(out1)
+as_basic(out1)
+as_universal(out1)
 plot(out1)
 \dontrun{
 (out2 <- tag_pos(presidential_debates_2012$dialogue)) # ~40 sec run time
