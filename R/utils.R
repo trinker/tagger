@@ -20,6 +20,7 @@ tagPOS <-  function(text.var, PTA, WTA, ...) {
     grab_ends <- which(a3w$end %in% ends)
 
     out <- stats::setNames(s[a3w], unlist(lapply(a3w$features, "[[", "POS")))
+    if (length(out) == 1) return(list(out))
     Map(function(s, e){out[s:e]}, grab_starts, grab_ends)
 
 }

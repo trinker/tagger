@@ -53,8 +53,9 @@ tag_pos <- function(text.var,
     PTA <- openNLP::Maxent_POS_Tag_Annotator()
     WTA <- openNLP::Maxent_Word_Token_Annotator()
 
-    ## loop through the chunks and tag them
+        ## loop through the chunks and tag them
     out <- unlist(lapply(text_list, function(x){
+
         x <- tagPOS(x, PTA, WTA)
         gc()
         x
