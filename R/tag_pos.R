@@ -17,6 +17,7 @@
 #' c(x) ## The true structure of a `tag_pos` object
 #'
 #' (out1 <- tag_pos(sam_i_am))
+#' tidy_pos(out1)
 #' as_word_tag(out1)
 #' count_tags(out1)
 #' as_basic(out1)
