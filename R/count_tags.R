@@ -24,9 +24,32 @@
 #' )
 #'
 #' library(dplyr)
-#' with(presidential_debates_2012,
-#'     count_tags(presidential_debates_2012_pos, grouping.var = list(person, time))
-#' ) %>% plot()
+#' presidential_debates_2012 %>%
+#'     with(
+#'         count_tags(
+#'             presidential_debates_2012_pos,
+#'             grouping.var = list(person, time)
+#'         )
+#'     ) %>%
+#'     plot()
+#'
+#' presidential_debates_2012_pos %>%
+#'     count_tags() %>%
+#'     as_dtm()
+#'
+#' presidential_debates_2012_pos %>%
+#'     as_basic() %>%
+#'     count_tags() %>%
+#'     as_dtm()
+#'
+#' presidential_debates_2012 %>%
+#'     with(
+#'         count_tags(
+#'             presidential_debates_2012_pos,
+#'             grouping.var = list(person, time)
+#'         )
+#'     ) %>%
+#'     as_dtm()
 count_tags <- function(x, grouping.var = NULL, group.names, pretty = TRUE, ...){
 
     n.tokens <- NULL

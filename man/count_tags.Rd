@@ -36,9 +36,32 @@ with(presidential_debates_2012,
 )
 
 library(dplyr)
-with(presidential_debates_2012,
-    count_tags(presidential_debates_2012_pos, grouping.var = list(person, time))
-) \%>\% plot()
+presidential_debates_2012 \%>\%
+    with(
+        count_tags(
+            presidential_debates_2012_pos,
+            grouping.var = list(person, time)
+        )
+    ) \%>\%
+    plot()
+
+presidential_debates_2012_pos \%>\%
+    count_tags() \%>\%
+    as_dtm()
+
+presidential_debates_2012_pos \%>\%
+    as_basic() \%>\%
+    count_tags() \%>\%
+    as_dtm()
+
+presidential_debates_2012 \%>\%
+    with(
+        count_tags(
+            presidential_debates_2012_pos,
+            grouping.var = list(person, time)
+        )
+    ) \%>\%
+    as_dtm()
 }
 \keyword{count}
 \keyword{proportion}
