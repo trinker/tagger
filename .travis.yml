@@ -10,7 +10,8 @@ r_github_packages:
   - jimhester/covr
   - trinker/termco
   - trinker/textshape
-
+  - trinker/gofastr
+  
 notifications:
   email:
     on_success:      change
