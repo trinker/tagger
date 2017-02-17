@@ -8,9 +8,9 @@ Description: Wraps the 'NLP' and 'openNLP' packages for easy part of
         speech tagging.
 Depends: R (>= 3.2.2)
 Suggests: testthat
-Imports: data.table, dplyr, ggplot2, methods, NLP, openNLP, scales,
+Imports: data.table, dplyr, ggplot2, gofastr, methods, NLP, openNLP, scales,
         stringi, termco, textshape, tidyr, utils
-Date: 2017-02-07
+Date: 2017-02-16
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)

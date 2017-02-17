@@ -8,11 +8,10 @@ before_install:
 
 r_github_packages:
   - jimhester/covr
-  - trinker/gofastr
   - trinker/termco
   - trinker/textshape
 
-  
+
 notifications:
   email:
     on_success:      change
