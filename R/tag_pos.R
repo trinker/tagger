@@ -5,9 +5,18 @@
 #' using the Apache OpenNLP chunking parser for English."
 #'
 #' @param text.var The text string variable.
+#' @param engine The backend pat of speech tagger, either "openNLP" or "coreNLP".
+#' The default "openNLP" uses the \pkg{openNLP} package.  If the user has the
+#' Stanford CoreNLP suite (\file{http://stanfordnlp.github.io/CoreNLP/})
+#' installed this can be used as the tagging backend instead.
 #' @param element.chunks The number of elements to include in a chunk. Chunks are
 #' passed through an \code{\link[base]{lapply}} and size is kept within a tolerance
 #' because of memory allocation in the tagging process with \pkg{Java}.
+#' @param \ldots Other arguments passed to \code{tagger:::core_tagger} including
+#' \code{stanford.tagger = stansent::coreNLP_loc()} and \code{java.path}, the
+#' path to \pkg{CoreNLP} and \pkg{Java} respectively.  Use
+#' \code{\link[tagger]{check_setup}} to check that \pkg{Java} is installed and
+#' of correct version and that Stanford's \pkg{CoreNLP} is installed and in root.
 #' @return Returns a list of part of speech tagged vectors.  The pretty printing
 #' does not indicated this feature, but the words and parts of speech are easily
 #' accessible through indexing.
@@ -29,9 +38,13 @@
 #' count_tags(out2, by = presidential_debates_2012$person)
 #' with(presidential_debates_2012, count_tags(out2, by = list(person, time)))
 #' plot(out2)
+#'
+#' ## CoreNLP
+#' tag_pos(sam_i_am, engine = 'coreNLP')
 #' }
-tag_pos <- function(text.var,
-    element.chunks = floor(2000 * (23.5/mean(sapply(text.var, nchar), na.rm = TRUE)))){
+tag_pos <- function(text.var, engine = "openNLP",
+    element.chunks = floor(2000 * (23.5/mean(sapply(text.var, nchar), na.rm = TRUE))),
+    ...){
 
     len <- length(text.var)
 
@@ -52,17 +65,33 @@ tag_pos <- function(text.var,
     ## chunk the text
     text_list <- Map(function(s, e) {text.var[s:e]}, starts, ends)
 
-    ## Need pos and word token annotations.
-    PTA <- openNLP::Maxent_POS_Tag_Annotator()
-    WTA <- openNLP::Maxent_Word_Token_Annotator()
+    switch(engine,
+        coreNLP = {
 
-        ## loop through the chunks and tag them
-    out <- unlist(lapply(text_list, function(x){
+            ## loop through the chunks and tag them
+            out <- unlist(lapply(text_list, function(x){
+                x <- core_tagger(x, ...)
+                gc()
+                x
+            }), recursive = FALSE)
 
-        x <- tagPOS(x, PTA, WTA)
-        gc()
-        x
-    }), recursive = FALSE)
+        },
+        openNLP = {
+
+            ## Need pos and word token annotations.
+            PTA <- openNLP::Maxent_POS_Tag_Annotator()
+            WTA <- openNLP::Maxent_Word_Token_Annotator()
+
+            ## loop through the chunks and tag them
+            out <- unlist(lapply(text_list, function(x){
+                x <- tagPOS(x, PTA, WTA)
+                gc()
+                x
+            }), recursive = FALSE)
+        },
+        stop("`engine` must be either \"openNLP\" or \"coreNLP\".")
+    )
+
 
     if(!identical(nas, integer(0))){
        out[nas] <- NA

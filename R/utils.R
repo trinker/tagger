@@ -25,6 +25,31 @@ tagPOS <-  function(text.var, PTA, WTA, ...) {
 
 }
 
+core_tagger <- function (text.var,
+    stanford.tagger = stansent::coreNLP_loc(), java.path = "java", ...) {
+
+    if (!file.exists(stanford.tagger)) {
+        check_stanford_installed(...)
+    }
+
+    cmd <- sprintf(
+        "%s -cp \"%s/*\" -mx5g edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators \"tokenize,ssplit,pos\" -ssplit.eolonly",
+        java.path, stanford.tagger
+    )
+    results <- system(cmd, input = text.var, intern = TRUE, ignore.stderr = TRUE)
+
+    starts <- grep("^Sentence #", results)
+    ends <- c(utils::tail(starts, -1) - 1, length(results))
+
+    Map(function(s, e){
+        results2 <- grep("^\\[Text", results[s:e], value=TRUE)
+        wrds <- gsub("(^[^=]+=)([^ ]+)(\\s.+$)", "\\2", results2)
+        names(wrds) <- gsub("(^.+?PartOfSpeech=)([^]]+)(\\]$)", "\\2", results2)
+        wrds
+    }, starts, ends)
+
+}
+
 weight <- function(x, weight = "percent", ...){
 
     switch(weight,

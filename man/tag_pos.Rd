@@ -4,15 +4,26 @@
 \alias{tag_pos}
 \title{Tag Text with Parts of Speech}
 \usage{
-tag_pos(text.var, element.chunks = floor(2000 * (23.5/mean(sapply(text.var,
-  nchar), na.rm = TRUE))))
+tag_pos(text.var, engine = "openNLP", element.chunks = floor(2000 *
+  (23.5/mean(sapply(text.var, nchar), na.rm = TRUE))), ...)
 }
 \arguments{
 \item{text.var}{The text string variable.}
 
+\item{engine}{The backend pat of speech tagger, either "openNLP" or "coreNLP".
+The default "openNLP" uses the \pkg{openNLP} package.  If the user has the
+Stanford CoreNLP suite (\file{http://stanfordnlp.github.io/CoreNLP/})
+installed this can be used as the tagging backend instead.}
+
 \item{element.chunks}{The number of elements to include in a chunk. Chunks are
 passed through an \code{\link[base]{lapply}} and size is kept within a tolerance
 because of memory allocation in the tagging process with \pkg{Java}.}
+
+\item{\ldots}{Other arguments passed to \code{tagger:::core_tagger} including
+\code{stanford.tagger = stansent::coreNLP_loc()} and \code{java.path}, the
+path to \pkg{CoreNLP} and \pkg{Java} respectively.  Use
+\code{\link[tagger]{check_setup}} to check that \pkg{Java} is installed and
+of correct version and that Stanford's \pkg{CoreNLP} is installed and in root.}
 }
 \value{
 Returns a list of part of speech tagged vectors.  The pretty printing
@@ -41,6 +52,9 @@ count_tags(out2)
 count_tags(out2, by = presidential_debates_2012$person)
 with(presidential_debates_2012, count_tags(out2, by = list(person, time)))
 plot(out2)
+
+## CoreNLP
+tag_pos(sam_i_am, engine = 'coreNLP')
 }
 }
 
