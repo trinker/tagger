@@ -99,29 +99,6 @@ Load the Tools/Data
 
     library(dplyr); library(tagger)
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following object is masked from 'package:qdap':
-    ## 
-    ##     %>%
-
-    ## The following object is masked from 'package:qdapTools':
-    ## 
-    ##     id
-
-    ## The following objects are masked from 'package:qdapRegex':
-    ## 
-    ##     escape, explain
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
     data(presidential_debates_2012)
     mwe <- data_frame(
         person = c("Tyler", "Norah", "Tyler"),
