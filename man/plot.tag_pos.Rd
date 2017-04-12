@@ -17,4 +17,3 @@ element in the vector/list).}
 \description{
 Plots a tag_pos object.
 }
-

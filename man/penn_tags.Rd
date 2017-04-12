@@ -19,4 +19,3 @@ A list of Penn Treebank parts of tags and their meaning.
 \examples{
 penn_tags()
 }
-

@@ -48,4 +48,3 @@ presidential_debates_2012_pos \%>\%
     select_tags(c("NN", "NNP", "NNPS", "NNS"), TRUE) \%>\%
     count_tags(presidential_debates_2012[, c("person", "time")])
 }
-

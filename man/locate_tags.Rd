@@ -48,4 +48,3 @@ presidential_debates_2012_pos \%>\%
 presidential_debates_2012_pos \%>\%
     locate_tags(c("NN", "NNP", "NNPS", "NNS"), negate=TRUE)
 }
-

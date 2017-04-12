@@ -19,4 +19,3 @@ vectors not as it prints.  Using \code{file} allows the user to export as it pri
 \description{
 Prints a as_tuple object.
 }
-

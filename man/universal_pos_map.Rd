@@ -24,4 +24,3 @@ corresponding to the 12 universal tags.
 Slav Petrov, Dipanjan Das and Ryan McDonald. (2011). A Universal Part-of-Speech Tagset. http://arxiv.org/abs/1104.2086
 }
 \keyword{datasets}
-

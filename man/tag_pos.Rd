@@ -57,4 +57,3 @@ plot(out2)
 tag_pos(sam_i_am, engine = 'coreNLP')
 }
 }
-

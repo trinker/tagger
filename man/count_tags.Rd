@@ -65,4 +65,3 @@ presidential_debates_2012 \%>\%
 }
 \keyword{count}
 \keyword{proportion}
-

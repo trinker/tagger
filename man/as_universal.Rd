@@ -56,4 +56,3 @@ as_universal(presidential_debates_2012_pos)
 \references{
 Slav Petrov, Dipanjan Das and Ryan McDonald. (2011). A Universal Part-of-Speech Tagset. http://arxiv.org/abs/1104.2086
 }
-

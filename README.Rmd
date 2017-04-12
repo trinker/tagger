@@ -56,6 +56,7 @@ pacman::p_load_gh(c(
 ))
 ```
 
+
 # Contact
 
 You are welcome to:
@@ -106,6 +107,10 @@ tag_pos(presidential_debates_2012$dialogue)
 ```
 
 This output is built into **tagger** as the `presidential_debates_2012_pos` data set, which we'll use form this point on in the demo.
+
+
+Note that the user may choose to use CoreNLP as a backend by setting `engine = coreNLP`.  To ensure that coreNLP is setup properly use `check_setup`.
+
 
 ## Plotting
 

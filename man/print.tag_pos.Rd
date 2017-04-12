@@ -18,4 +18,3 @@
 \description{
 Prints a tag_pos object.
 }
-

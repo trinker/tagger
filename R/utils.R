@@ -26,10 +26,10 @@ tagPOS <-  function(text.var, PTA, WTA, ...) {
 }
 
 core_tagger <- function (text.var,
-    stanford.tagger = stansent::coreNLP_loc(), java.path = "java", ...) {
+    stanford.tagger = coreNLPsetup::coreNLP_loc(), java.path = "java", ...) {
 
     if (!file.exists(stanford.tagger)) {
-        check_stanford_installed(...)
+        coreNLPsetup::check_stanford_installed(...)
     }
 
     cmd <- sprintf(

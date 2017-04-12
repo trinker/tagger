@@ -2,11 +2,10 @@
 % Please edit documentation in R/tagger-package.R
 \docType{package}
 \name{tagger}
-\alias{package-tagger}
 \alias{tagger}
+\alias{package-tagger}
 \alias{tagger-package}
 \title{Part of Speech Tagging}
 \description{
 Wraps the \pkg{NLP} and \pkg{openNLP} packages for easier part of speech tagging.
 }
-

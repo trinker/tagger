@@ -10,6 +10,7 @@ Status](https://travis-ci.org/trinker/tagger.svg?branch=master)](https://travis-
 Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](https://coveralls.io/r/trinker/tagger?branch=master)
 <a href="https://img.shields.io/badge/Version-0.0.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.2-orange.svg" alt="Version"/></a>
 </p>
+
 <img src="inst/tagger_logo/r_tagger.png" width="200" alt="tagger Logo">
 
 **tagger** wraps the **NLP** and **openNLP** packages for easier part of
@@ -22,22 +23,22 @@ The main functions and descriptions are listed in the table below.
 <table>
 <thead>
 <tr class="header">
-<th align="left">Function</th>
-<th align="left">Description</th>
+<th>Function</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code>tag_pos</code></td>
-<td align="left">Tag parts of speech</td>
+<td><code>tag_pos</code></td>
+<td>Tag parts of speech</td>
 </tr>
 <tr class="even">
-<td align="left"><code>select_tags</code></td>
-<td align="left">Select specific part of speech tags from <code>tag_pos</code></td>
+<td><code>select_tags</code></td>
+<td>Select specific part of speech tags from <code>tag_pos</code></td>
 </tr>
 <tr class="odd">
-<td align="left"><code>count_tags</code></td>
-<td align="left">Cross tabs of tags by grouping variable</td>
+<td><code>count_tags</code></td>
+<td>Cross tabs of tags by grouping variable</td>
 </tr>
 </tbody>
 </table>
@@ -191,6 +192,10 @@ run, depending on the machine.
 This output is built into **tagger** as the
 `presidential_debates_2012_pos` data set, which we'll use form this
 point on in the demo.
+
+Note that the user may choose to use CoreNLP as a backend by setting
+`engine = coreNLP`. To ensure that coreNLP is setup properly use
+`check_setup`.
 
 Plotting
 --------
@@ -366,7 +371,7 @@ Note that the output is a `tag_pos` class and the plotting,
         select_tags("^(VB|NN)", regex=TRUE) %>%
         count_tags()
 
-    ## # A tibble: 2,912 x 11
+    ## # A tibble: 2,912 × 11
     ##    n.tokens        NN      NNP  NNPS       NNS       VB   VBD      VBG
     ##       <dbl>     <chr>    <chr> <chr>     <chr>    <chr> <chr>    <chr>
     ## 1         4  3(75.0%)        0     0         0 1(25.0%)     0        0

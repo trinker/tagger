@@ -41,4 +41,3 @@ as_tuple(x, word.first=FALSE)
 (out1 <- tag_pos(sam_i_am))
 as_tuple(c(out1))
 }
-

@@ -45,4 +45,3 @@ presidential_debates_2012_pos \%>\%
     select_tags(c("NN", "NNP", "NNPS", "NNS")) \%>\%
     as_tokens(collapse = FALSE)
 }
-

@@ -34,4 +34,3 @@ additional information.}
 \description{
 Plots a count_tags object.
 }
-

@@ -29,4 +29,3 @@ tidy data.frame.
 (out1 <- tag_pos(sam_i_am))
 tidy_pos(out1)
 }
-

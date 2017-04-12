@@ -49,4 +49,3 @@ issue of Foundations of Science, 7 (3), 293-340.
 \keyword{formality,}
 \keyword{parts-of-speech,}
 \keyword{pos}
-

@@ -13,4 +13,3 @@ A dataset containing a list of named vectors of words.  The word names are the
 part of speech tags.
 }
 \keyword{datasets}
-
