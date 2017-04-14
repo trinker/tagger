@@ -1,6 +1,17 @@
-tagger   [![Follow](https://img.shields.io/twitter/follow/tylerrinker.svg?style=social)](https://twitter.com/intent/follow?screen_name=tylerrinker)
-============
-
+-   [Installation](#installation)
+-   [Contact](#contact)
+-   [Examples](#examples)
+    -   [Load the Tools/Data](#load-the-toolsdata)
+    -   [Tagging](#tagging)
+    -   [Plotting](#plotting)
+    -   [Interpreting Tags](#interpreting-tags)
+    -   [Counts](#counts)
+    -   [Select Tags](#select-tags)
+    -   [Altering Tag Display](#altering-tag-display)
+        -   [As Word Tags](#as-word-tags)
+        -   [As Tuples](#as-tuples)
+        -   [As Universal Tags](#as-universal-tags)
+        -   [As Basic Tags](#as-basic-tags)
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -10,7 +21,6 @@ Status](https://travis-ci.org/trinker/tagger.svg?branch=master)](https://travis-
 Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](https://coveralls.io/r/trinker/tagger?branch=master)
 <a href="https://img.shields.io/badge/Version-0.0.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.2-orange.svg" alt="Version"/></a>
 </p>
-
 <img src="inst/tagger_logo/r_tagger.png" width="200" alt="tagger Logo">
 
 **tagger** wraps the **NLP** and **openNLP** packages for easier part of
@@ -43,28 +53,8 @@ The main functions and descriptions are listed in the table below.
 </tbody>
 </table>
 
-
-Table of Contents
-============
-
--   [Installation](#installation)
--   [Contact](#contact)
--   [Examples](#examples)
-    -   [Load the Tools/Data](#load-the-toolsdata)
-    -   [Tagging](#tagging)
-    -   [Plotting](#plotting)
-    -   [Interpreting Tags](#interpreting-tags)
-    -   [Counts](#counts)
-    -   [Select Tags](#select-tags)
-    -   [Altering Tag Display](#altering-tag-display)
-        -   [As Word Tags](#as-word-tags)
-        -   [As Tuples](#as-tuples)
-        -   [As Universal Tags](#as-universal-tags)
-        -   [As Basic Tags](#as-basic-tags)
-
 Installation
 ============
-
 
 To download the development version of **tagger**:
 
@@ -83,10 +73,10 @@ development version:
 Contact
 =======
 
-You are welcome to:    
-- submit suggestions and bug-reports at: <https://github.com/trinker/tagger/issues>    
-- send a pull request on: <https://github.com/trinker/tagger/>    
-- compose a friendly e-mail to: <tyler.rinker@gmail.com>    
+You are welcome to: \* submit suggestions and bug-reports at:
+<https://github.com/trinker/tagger/issues> \* send a pull request on:
+<https://github.com/trinker/tagger/> \* compose a friendly e-mail to:
+<tyler.rinker@gmail.com>
 
 Examples
 ========
@@ -456,7 +446,7 @@ Dewaele, 2002) scoring.
     contextuality of language: An empirical measure. Context in Context,
     Special issue of Foundations of Science, 7 (3), 293-340.
 
-
+<!-- -->
 
     tag_pos(mwe$talk) %>%
         as_basic()
