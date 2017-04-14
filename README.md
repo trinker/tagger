@@ -11,7 +11,7 @@ Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](http
 <a href="https://img.shields.io/badge/Version-0.0.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.2-orange.svg" alt="Version"/></a>
 </p>
 
-<img src="inst/tagger_logo/r_tagger.png" width="200" alt="tagger Logo">
+![](tools/tagger_logo/r_tagger.png)
 
 **tagger** wraps the **NLP** and **openNLP** packages for easier part of
 speech tagging. **tagger** uses the **openNLP** annotator to compute
@@ -98,6 +98,30 @@ Load the Tools/Data
 -------------------
 
     library(dplyr); library(tagger)
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following object is masked from 'package:qdap':
+    ## 
+    ##     %>%
+
+    ## The following object is masked from 'package:qdapTools':
+    ## 
+    ##     id
+
+    ## The following objects are masked from 'package:qdapRegex':
+    ## 
+    ##     escape, explain
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
     data(presidential_debates_2012)
     mwe <- data_frame(
         person = c("Tyler", "Norah", "Tyler"),
@@ -181,7 +205,7 @@ The user can generate a horizontal barplot of the used tags.
     presidential_debates_2012_pos %>%
         plot()
 
-![](inst/figure/unnamed-chunk-7-1.png)
+![](tools/figure/unnamed-chunk-7-1.png)
 
 Interpreting Tags
 -----------------
@@ -341,7 +365,7 @@ Note that the output is a `tag_pos` class and the plotting,
         select_tags("^(VB|NN)", regex=TRUE) %>%
         plot()
 
-![](inst/figure/unnamed-chunk-14-1.png)
+![](tools/figure/unnamed-chunk-14-1.png)
 
     presidential_debates_2012_pos %>%
         select_tags("^(VB|NN)", regex=TRUE) %>%
@@ -427,7 +451,7 @@ The out put is a `tag_pos` object and thus has a generic plot method.
         as_universal() %>%
         plot()
 
-![](inst/figure/unnamed-chunk-19-1.png)
+![](tools/figure/unnamed-chunk-19-1.png)
 
     tag_pos(mwe$talk) %>%
         as_universal() %>%
@@ -470,7 +494,7 @@ The output is a `tag_pos` object and thus has a generic plot method.
         as_basic() %>%
         plot()
 
-![](inst/figure/unnamed-chunk-22-1.png)
+![](tools/figure/unnamed-chunk-22-1.png)
 
     tag_pos(mwe$talk) %>%
         as_basic() %>%

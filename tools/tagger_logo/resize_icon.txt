@@ -1,0 +1,2 @@
+cd C:\Users\Tyler\GitHub\tagger\tools\tagger_logo
+ffmpeg -i r_taggera.png -vf scale=150:-1 r_tagger.png

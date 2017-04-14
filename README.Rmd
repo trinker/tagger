@@ -22,13 +22,13 @@ knit_hooks$set(htmlcap = function(before, options, envir) {
     }
     })
 knitr::opts_knit$set(self.contained = TRUE, cache = FALSE)
-knitr::opts_chunk$set(fig.path = "inst/figure/")
+knitr::opts_chunk$set(fig.path = "tools/figure/")
 ```
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)[![Build Status](https://travis-ci.org/trinker/tagger.svg?branch=master)](https://travis-ci.org/trinker/tagger)
 [![Coverage Status](https://coveralls.io/repos/trinker/tagger/badge.svg?branch=master)](https://coveralls.io/r/trinker/tagger?branch=master) `r verbadge`
 
-<img src="inst/tagger_logo/r_tagger.png" width="200" alt="tagger Logo">  
+![](tools/tagger_logo/r_tagger.png)
 
 **tagger** wraps the **NLP** and **openNLP** packages for easier part of speech tagging.  **tagger** uses the **openNLP** annotator to compute "Penn Treebank parse annotations using the Apache OpenNLP chunking parser for English."  
 
