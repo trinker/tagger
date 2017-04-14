@@ -454,7 +454,7 @@ Dewaele, 2002) scoring.
 
 -   Heylighen, F., & Dewaele, J.M. (2002). Variation in the
     contextuality of language: An empirical measure. Context in Context,
-    Special issue of Foundations of Science, 7 (3), 293-340.
+    Special issue of Foundations of Science, 7 (3), 293-340.<p></p>
 
 
 
