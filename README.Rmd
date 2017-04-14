@@ -240,17 +240,18 @@ tag_pos(mwe$talk) %>%
 
 ### As Basic Tags 
 
-`as_basic` provides an even more coarse tagset than `as_universal`.  Basic tags include: (a) `nouns`, (b) `adjectives`, (c) `prepositions`, (d) `articles`, (e) `verb`, (f) `pronoun`s, (g) `adverbs`, (h) `interjections`, & (i) `conjunctions`.  The `X` and `.` tags are retained for punctuation and unclassified parts of speech.  This tagset can be useful for more coarse purposes, including formality (Heylighen & Dewaele, 2002) scoring.
-
-- Heylighen, F., & Dewaele, J.M. (2002). Variation in the contextuality of language: An empirical measure. Context in Context, Special issue of Foundations of Science, 7 (3), 293-340.    
-
+`as_basic` provides an even more coarse tagset than `as_universal`.  Basic tags include: (a) `nouns`, (b) `adjectives`, (c) `prepositions`, (d) `articles`, (e) `verb`, (f) `pronoun`s, (g) `adverbs`, (h) `interjections`, & (i) `conjunctions`.  The `X` and `.` tags are retained for punctuation and unclassified parts of speech.  
 
 ```{r}
 tag_pos(mwe$talk) %>%
     as_basic()
 ```
 
-The out put is a `tag_pos` object and thus has a generic plot method.
+This tagset can be useful for more coarse purposes, including formality (Heylighen & Dewaele, 2002) scoring.
+
+- Heylighen, F., & Dewaele, J.M. (2002). Variation in the contextuality of language: An empirical measure. Context in Context, Special issue of Foundations of Science, 7 (3), 293-340.    
+
+The output is a `tag_pos` object and thus has a generic plot method.
 
 ```{r}
 tag_pos(mwe$talk) %>%
