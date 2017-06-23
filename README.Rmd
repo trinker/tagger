@@ -52,6 +52,7 @@ Download the [zip ball](https://github.com/trinker/tagger/zipball/master) or [ta
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh(c(
     "trinker/termco", 
+    "trinker/coreNLPsetup",
     "trinker/tagger"
 ))
 ```
