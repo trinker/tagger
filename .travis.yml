@@ -9,9 +9,10 @@ before_install:
 r_github_packages:
   - jimhester/covr
   - trinker/gofastr
+  - trinker/coreNLPsetup  
   - trinker/termco
   - trinker/textshape
-  - trinker/coreNLPsetup
+
 
 
 notifications:
